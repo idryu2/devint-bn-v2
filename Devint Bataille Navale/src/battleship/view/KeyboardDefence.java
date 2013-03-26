@@ -11,6 +11,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import battleship.game.Game;
+
 
 public class KeyboardDefence extends BasicGame {
 	private int height;
@@ -26,8 +28,12 @@ public class KeyboardDefence extends BasicGame {
 	private LinkedList<Case> tmpBoat;
 	private LinkedList<LinkedList<Case>> finalBoats;
 
-	public KeyboardDefence(int h, int w) {
-		super("SimpleTest");
+	private Game hook;
+	
+	public KeyboardDefence(int h, int w, Game g) {
+		super("KeyboardDefence");
+		
+		this.hook = g;
 		this.height = h;
 		this.width = w;
 		this.tmpBoat = new LinkedList<>();

@@ -25,10 +25,15 @@ public class Config {
 	public static HashMap<SoundType, String> SOUNDS_PATHS_DICTIONARY = new HashMap<SoundType, String>();
 	static 
 	{
-		SOUNDS_PATHS_DICTIONARY.put(SoundType.EXPLOSION, "../resources/sounds/explosion.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.EXPLOSION, "resources/sounds/explosion.wav");
 	}
 	
 	// -- Paths
 	//
-	public static final String PICTURES_PATH = "../resources/pictures/";
+	public static final String PICTURES_PATH = "resources/pictures/";
+	
+	// -- UI
+	//
+	public static final int WINDOW_WIDTH = 1000;
+	public static final int WINDOW_HEIGHT = 500;
 }
