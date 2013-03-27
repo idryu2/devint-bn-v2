@@ -6,7 +6,7 @@ import battleship.ai.AIPlayer;
 import battleship.config.Config;
 import battleship.services.sounds.*;
 import battleship.view.BattleShipView;
-import battleship.view.KeyboardDefence;
+import battleship.view.KeyboardPlacement;
 
 /**
  * Game
@@ -64,7 +64,7 @@ public class Game {
 	{
 		try 
 		{
-			this.currentview = new KeyboardDefence(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this);
+			this.currentview = new KeyboardPlacement(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this);
 			this.gameContainer = new AppGameContainer(this.currentview);
 			this.gameContainer.setDisplayMode(1000, 550, false);
 			this.gameContainer.start();
