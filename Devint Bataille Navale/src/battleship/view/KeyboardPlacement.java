@@ -22,11 +22,8 @@ public class KeyboardPlacement extends BattleShipView {
 
 	
 	public KeyboardPlacement(int h, int w, Game g) {
-		super("KeyboardDefence");
-		
-		this.hook = g;
-		this.height = h;
-		this.width = w;
+		super("KeyboardDefence", w, h, g);
+
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
 
@@ -154,16 +151,7 @@ public class KeyboardPlacement extends BattleShipView {
 	@Override
 	public void render(GameContainer container, Graphics g)
 	{
-		g.setColor(org.newdawn.slick.Color.white);
-		for(Entry<Integer, Case> maCase : cases.entrySet())
-		{
-			Case c = maCase.getValue();
-
-			g.setColor(c.getColor());
-			g.fill(c);
-			g.setColor(org.newdawn.slick.Color.black);
-			g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
-		}
+		super.render(container,g);
 
 	}
 

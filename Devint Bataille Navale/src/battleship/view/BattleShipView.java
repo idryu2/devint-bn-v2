@@ -1,6 +1,7 @@
 package battleship.view;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -31,9 +32,14 @@ public abstract class BattleShipView extends BasicGame {
 	// Hameçon vers la classe principale
 	protected Game hook;
 	
-	protected BattleShipView(String title) 
+	protected BattleShipView(String title, int h , int w, Game g) 
 	{
 		super(title);
+		
+		this.height = h;
+		this.width = w;
+		this.hook = g;
+		
 		matchKeys = new HashMap<>();
 		matchKeys.put(firstRowTitles[0], Input.KEY_A);
 		matchKeys.put(firstRowTitles[1], Input.KEY_Z);
@@ -95,7 +101,18 @@ public abstract class BattleShipView extends BasicGame {
 		return listCases;
 	}
 	@Override
-	public abstract void render(GameContainer arg0, Graphics arg1);
+	public void render(GameContainer container, Graphics g){
+		g.setColor(org.newdawn.slick.Color.white);
+		for(Entry<Integer, Case> maCase : cases.entrySet())
+		{
+			Case c = maCase.getValue();
+
+			g.setColor(c.getColor());
+			g.fill(c);
+			g.setColor(org.newdawn.slick.Color.black);
+			g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
+		}
+	}
 
 	@Override
 	public abstract void init(GameContainer arg0);
