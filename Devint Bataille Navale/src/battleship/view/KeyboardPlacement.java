@@ -22,7 +22,7 @@ public class KeyboardPlacement extends BattleShipView {
 
 	
 	public KeyboardPlacement(int h, int w, Game g) {
-		super("KeyboardDefence", w, h, g);
+		super("KeyboardDefence", h, w, g);
 
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
