@@ -14,4 +14,9 @@ public abstract class Boat {
 
 	protected int nbPoints;
 	protected Case[] cases;
+	
+	public Case[] getCases() {
+		return cases;
+	}
+	
 }
