@@ -25,4 +25,8 @@ public class AIPlayer implements IPlayer {
 		return null;
 	}
 
+	public PlayerContext getContext() {
+		return context;
+	}
+
 }
