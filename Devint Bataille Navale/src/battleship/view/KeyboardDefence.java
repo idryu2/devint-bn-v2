@@ -78,15 +78,21 @@ public class KeyboardDefence extends BattleShipView {
 		
 		String firstCase = lc.getFirst().getName();
 		
-		if (getIndexOf(this.firstRowTitles, firstCase) != -1)
+		int ind = getIndexOf(this.firstRowTitles, firstCase);
+		
+		if (ind != -1)
 		{
 			
 		}
-		else if (getIndexOf(this.secondRowTitles, firstCase) != -1)
+		
+		ind = getIndexOf(this.secondRowTitles, firstCase);
+		if (ind != -1)
 		{
 			
 		}
-		else if (getIndexOf(this.thirdRowTitles, firstCase) != -1)
+		
+		ind = getIndexOf(this.thirdRowTitles, firstCase);
+		if (ind != -1)
 		{
 			
 		}
