@@ -31,5 +31,13 @@ public class Case extends Rectangle {
 		this.color = color;
 	}
 	
+	@Override
+	public boolean equals(Object o){
+		if (!(o instanceof Case))
+			return false;
+		return this.name.equals(((Case)o).name);
+					
+	}
+	
 
 }

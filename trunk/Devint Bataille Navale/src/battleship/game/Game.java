@@ -55,7 +55,9 @@ public class Game {
 	{
 		return soundPlayer;
 	}
-	
+	public PlayerContext getCurrentPlayer(){
+		return realPlayerContext;
+	}
 	
 	/**
 	 * Launch the boat selection view
