@@ -16,31 +16,31 @@ public abstract class BattleShipView extends BasicGame {
 	// Dimensions de la fenêtre
 	protected int height;
 	protected int width;
-	
+
 	// Décrit le clavier avec des Strings
 	protected String[] firstRowTitles = {"a","z","e","r","t","y","u","i","o","p"};
 	protected String[] secondRowTitles = {"q","s","d","f","g","h","j","k","l","m"};
 	protected String[] thirdRowTitles = {"w","x","c","v","b","n"};
-	
+
 	// Contient toutes les cases du clavier
 	// <int ref touche, Case>
 	protected HashMap<Integer, Case> cases ;
-	
+
 	// Fait correspondre un string représentant une lettre avec
 	// un entier représentant une réference de touche de clavier
 	protected LinkedHashMap<String, Integer> matchKeys;
-	
+
 	// Hameçon vers la classe principale
 	protected Game hook;
-	
+
 	protected BattleShipView(String title, int h , int w, Game g) 
 	{
 		super(title);
-		
+
 		this.height = h;
 		this.width = w;
 		this.hook = g;
-		
+
 		matchKeys = new LinkedHashMap<>();
 		matchKeys.put(firstRowTitles[0], Input.KEY_A);
 		matchKeys.put(firstRowTitles[1], Input.KEY_Z);
@@ -95,10 +95,10 @@ public abstract class BattleShipView extends BasicGame {
 			listCases.put(matchKeys.get(firstRowTitles[i]), new Case(firstRow+i*(taille+1),taille,taille,taille, firstRowTitles[i]));
 			listCases.put(matchKeys.get(secondRowTitles[i]), new Case(secondRow+i*(taille+1),2*taille+1,taille,taille,secondRowTitles[i]));
 		}
-		
+
 		for (int i=0; i<6;i++)
 			listCases.put(matchKeys.get(thirdRowTitles[i]), new Case(thirdRow+i*(taille+1),3*taille+2,taille,taille,thirdRowTitles[i]));
-		
+
 		return listCases;
 	}
 	@Override
@@ -119,6 +119,9 @@ public abstract class BattleShipView extends BasicGame {
 	public abstract void init(GameContainer arg0);
 
 	@Override
-	public abstract void update(GameContainer arg0, int arg1);
-
+	public void update(GameContainer container, int arg1)
+	{
+		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
+			System.exit(0);
+	}
 }
