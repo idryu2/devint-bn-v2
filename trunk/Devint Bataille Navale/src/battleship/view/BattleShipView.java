@@ -1,6 +1,7 @@
 package battleship.view;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import org.newdawn.slick.BasicGame;
@@ -27,7 +28,7 @@ public abstract class BattleShipView extends BasicGame {
 	
 	// Fait correspondre un string représentant une lettre avec
 	// un entier représentant une réference de touche de clavier
-	protected HashMap<String, Integer> matchKeys;
+	protected LinkedHashMap<String, Integer> matchKeys;
 	
 	// Hameçon vers la classe principale
 	protected Game hook;
@@ -40,7 +41,7 @@ public abstract class BattleShipView extends BasicGame {
 		this.width = w;
 		this.hook = g;
 		
-		matchKeys = new HashMap<>();
+		matchKeys = new LinkedHashMap<>();
 		matchKeys.put(firstRowTitles[0], Input.KEY_A);
 		matchKeys.put(firstRowTitles[1], Input.KEY_Z);
 		matchKeys.put(firstRowTitles[2], Input.KEY_E);

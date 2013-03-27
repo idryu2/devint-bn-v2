@@ -73,9 +73,16 @@ public class KeyboardPlacement extends BattleShipView {
 		if (lc.size() != 3)
 			return false;
 		
-		String firstCase = lc.get(0).getName();
-		String secondCase = lc.get(1).getName();
-		String thirdCase = lc.get(2).getName();
+		// Order the list
+		LinkedList<Case> nlc = new LinkedList<Case>();
+		for (Entry<String, Integer> en : this.matchKeys.entrySet())
+			for (Case c : lc)
+				if (c.getName().equals(en.getKey()))
+					nlc.add(c);
+		
+		String firstCase = nlc.get(0).getName();
+		String secondCase = nlc.get(1).getName();
+		String thirdCase = nlc.get(2).getName();
 		
 		int ind1 = getIndexOf(this.firstRowTitles, firstCase);
 		int ind2, ind3;
@@ -86,8 +93,32 @@ public class KeyboardPlacement extends BattleShipView {
 			
 			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
 			{
+				// Ligne
 				ind3 = getIndexOf(this.firstRowTitles, thirdCase);
 				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
+					return true;
+				
+				// Triangle sup
+				ind3 = getIndexOf(this.secondRowTitles, thirdCase);
+				int shortest = (ind1 > ind2) ? ind2 : ind1;
+				int largest = (ind1 > ind2) ? ind1 : ind2;
+				
+				if (ind3 == shortest)
+					return true;
+				
+				return false;
+			}
+			
+			ind2 = getIndexOf(this.secondRowTitles, secondCase);
+			ind3 = getIndexOf(this.secondRowTitles, thirdCase);
+			
+			// Triangle inf
+			if (ind2 > -1 && ind3 > -1 && (Math.abs(ind3 - ind2) == 1))
+			{
+				int shortest = (ind2 > ind3) ? ind3 : ind2;
+				int largest = (ind2 > ind3) ? ind2 : ind3;
+				
+				if (ind1 == largest)
 					return true;
 			}
 		}
@@ -95,13 +126,51 @@ public class KeyboardPlacement extends BattleShipView {
 		ind1 = getIndexOf(this.secondRowTitles, firstCase);
 		if (ind1 != -1)
 		{
+			ind2 = getIndexOf(this.secondRowTitles, secondCase);
+			
+			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
+			{
+				ind3 = getIndexOf(this.secondRowTitles, thirdCase);
+				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
+					return true;
+				
+				ind3 = getIndexOf(this.thirdRowTitles, thirdCase);
+				int shortest = (ind1 > ind2) ? ind2 : ind1;
+				int largest = (ind1 > ind2) ? ind1 : ind2;
+				
+				if (ind3 == shortest)
+					return true;
+				
+				return false;
+			}
+			
+			ind2 = getIndexOf(this.thirdRowTitles, secondCase);
+			ind3 = getIndexOf(this.thirdRowTitles, thirdCase);
+			
+			// Triangle inf
+			if (ind2 > -1 && ind3 > -1 && (Math.abs(ind3 - ind2) == 1))
+			{
+				int shortest = (ind2 > ind3) ? ind3 : ind2;
+				int largest = (ind2 > ind3) ? ind2 : ind3;
+				
+				if (ind1 == largest)
+					return true;
+			}
 			
 		}
 		
 		ind1 = getIndexOf(this.thirdRowTitles, firstCase);
 		if (ind1 != -1)
 		{
+			ind2 = getIndexOf(this.thirdRowTitles, secondCase);
 			
+			//  Bateau en ligne
+			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
+			{
+				ind3 = getIndexOf(this.thirdRowTitles, thirdCase);
+				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
+					return true;
+			}
 		}
 		
 		return false;
@@ -127,7 +196,6 @@ public class KeyboardPlacement extends BattleShipView {
 						tmpBoat.removeFirst();
 
 					tmpBoat.addLast(maCase.getValue());
-					System.out.println("Case ajoutee");
 				}
 
 				break;
@@ -146,7 +214,7 @@ public class KeyboardPlacement extends BattleShipView {
 		
 		if (input.isKeyDown(Input.KEY_ENTER))
 		{
-			if(this.tmpBoat.size() == 3)
+			if(this.isBoatCorrect(this.tmpBoat))
 				this.finalBoats.addLast(this.tmpBoat);
 				
 			this.tmpBoat = new LinkedList<>();
