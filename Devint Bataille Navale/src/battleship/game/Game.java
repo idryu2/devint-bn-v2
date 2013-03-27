@@ -5,6 +5,7 @@ import org.newdawn.slick.*;
 import battleship.ai.AIPlayer;
 import battleship.config.Config;
 import battleship.services.sounds.*;
+import battleship.view.BattleShipView;
 import battleship.view.KeyboardDefence;
 
 /**
@@ -21,6 +22,7 @@ public class Game {
 	private PlayerContext realPlayerContext;
 	private SoundPlayer soundPlayer;
 	private AppGameContainer gameContainer;
+	private BattleShipView currentview;
 	
 	public Game()
 	{
@@ -62,7 +64,8 @@ public class Game {
 	{
 		try 
 		{
-			this.gameContainer = new AppGameContainer(new KeyboardDefence(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this));
+			this.currentview = new KeyboardDefence(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this);
+			this.gameContainer = new AppGameContainer(this.currentview);
 			this.gameContainer.setDisplayMode(1000, 550, false);
 			this.gameContainer.start();
 		} 

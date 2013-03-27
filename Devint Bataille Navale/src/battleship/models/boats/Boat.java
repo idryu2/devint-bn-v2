@@ -1,6 +1,7 @@
 package battleship.models.boats;
 
-import battleship.game.Case;
+import battleship.view.Case;
+
 
 /**
  * Boat

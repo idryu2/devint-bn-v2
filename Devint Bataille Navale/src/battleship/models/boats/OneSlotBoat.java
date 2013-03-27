@@ -1,7 +1,7 @@
 package battleship.models.boats;
 
 import battleship.config.Config;
-import battleship.game.Case;
+import battleship.view.Case;
 
 /**
  * OneSlotBoat

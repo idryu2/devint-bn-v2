@@ -1,6 +1,7 @@
 package battleship.ai;
 
 import battleship.game.*;
+import battleship.view.Case;
 
 /**
  * AIPlayer

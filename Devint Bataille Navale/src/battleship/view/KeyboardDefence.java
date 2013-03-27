@@ -4,31 +4,22 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
 import battleship.game.Game;
 
 
-public class KeyboardDefence extends BasicGame {
-	private int height;
-	private int width;
+public class KeyboardDefence extends BattleShipView {
 	
-	private String[] firstRowTitles = {"a","z","e","r","t","y","u","i","o","p"};
-	private String[] secondRowTitles = {"q","s","d","f","g","h","j","k","l","m"};
-	private String[] thirdRowTitles = {"w","x","c","v","b","n"};
-	
-	private HashMap<Integer,Case> cases ;
-	private HashMap<String, Integer> matchKeys;
-	
+	// Liste des 3 cases formant le bateau courant
 	private LinkedList<Case> tmpBoat;
+	
+	// Liste des listes de 3 cases représentant les bateaux retenus
 	private LinkedList<LinkedList<Case>> finalBoats;
 
-	private Game hook;
 	
 	public KeyboardDefence(int h, int w, Game g) {
 		super("KeyboardDefence");
@@ -71,13 +62,23 @@ public class KeyboardDefence extends BasicGame {
 
 		this.cases = CreateKeyBoard(this.width/14);
 	}
-
+	
+	/**
+	 * Initialisation
+	 * 
+	 */
 	@Override
-	public void init(GameContainer container) throws SlickException {
+	public void init(GameContainer container) 
+	{
 		container.getGraphics().setBackground(org.newdawn.slick.Color.blue );
-
 	}
-
+	
+	/**
+	 * Détermine si une case fait partie des bateaux finaux
+	 * 
+	 * @param c
+	 * @return
+	 */
 	private boolean isCaseInFinalBoats(Case c)
 	{
 		for (LinkedList<Case> lc : this.finalBoats)
@@ -85,9 +86,31 @@ public class KeyboardDefence extends BasicGame {
 				return true;
 		return false;
 	}
-
+	
+	/**
+	 * Détermine si la forme engendrée par les 3 cases représente un bateau correct
+	 * ou non
+	 * 
+	 * @param lc
+	 * @return
+	 */
+	private boolean isBoatCorrect(LinkedList<Case> lc)
+	{
+		if (lc.size() != 3)
+			return false;
+		
+		
+		
+		return true;
+	}
+	
+	/**
+	 * Gère les updates de couleurs sur les composants
+	 * 
+	 */
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, int delta) 
+	{
 		Input input = container.getInput();
 
 		for(Entry<Integer, Case> maCase : cases.entrySet())
@@ -95,7 +118,7 @@ public class KeyboardDefence extends BasicGame {
 			maCase.getValue().setColor(Color.white);
 			if(input.isKeyDown(maCase.getKey()))
 			{
-				if ( !tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
+				if (!tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
 				{
 					if (tmpBoat.size() >= 3)
 						tmpBoat.removeFirst();
@@ -104,7 +127,6 @@ public class KeyboardDefence extends BasicGame {
 					System.out.println("Case ajoutee");
 				}
 
-				System.out.println("Touche "+maCase.getValue().getName()+" enfoncee");
 				break;
 			}
 
@@ -115,24 +137,26 @@ public class KeyboardDefence extends BasicGame {
 				if (lc.contains(maCase.getValue()))
 					maCase.getValue().setColor(Color.red);
 		}
-		if (input.isKeyDown(Input.KEY_ENTER)){
+		
+		if (input.isKeyDown(Input.KEY_ENTER))
+		{
 			if(this.tmpBoat.size() == 3)
-			{
-				System.out.print("Etat liste : ");
-				for (Case c : this.tmpBoat) System.out.print(c.getName());
-				System.out.println("");
 				this.finalBoats.addLast(this.tmpBoat);
-				this.tmpBoat = new LinkedList<>();
-			}
-			else
-			{
-				this.tmpBoat = new LinkedList<>();
-			}
+				
+			this.tmpBoat = new LinkedList<>();
 		}
+		
+		if (input.isKeyDown(Input.KEY_BACK))
+			this.tmpBoat = new LinkedList<>();
 	}
 
+	/**
+	 * Dessine l'UI
+	 * 
+	 */
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void render(GameContainer container, Graphics g)
+	{
 		g.setColor(org.newdawn.slick.Color.white);
 		for(Entry<Integer, Case> maCase : cases.entrySet())
 		{
@@ -141,14 +165,20 @@ public class KeyboardDefence extends BasicGame {
 			g.setColor(c.getColor());
 			g.fill(c);
 			g.setColor(org.newdawn.slick.Color.black);
-			g.drawString(c.getName(), c.getCenterX(),c.getCenterY());
+			g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
 		}
 
 	}
 
-	private HashMap<Integer,Case> CreateKeyBoard(int taille){
-		System.out.println(matchKeys.size()+"\n");
-		HashMap<Integer,Case> listCases =new HashMap<>();
+	/**
+	 * Créé le clavier virtuel
+	 * 
+	 * @param taille
+	 * @return
+	 */
+	private HashMap<Integer,Case> CreateKeyBoard(int taille)
+	{
+		HashMap<Integer,Case> listCases = new HashMap<>();
 		int firstRow = taille/2;
 		int secondRow = taille;
 		int thirdRow = taille+taille/2;
@@ -157,13 +187,15 @@ public class KeyboardDefence extends BasicGame {
 		listCases.put(matchKeys.get(secondRowTitles[0]), new Case(secondRow,2*taille+1,taille,taille,secondRowTitles[0]));
 		listCases.put(matchKeys.get(thirdRowTitles[0]), new Case(thirdRow,3*taille+2,taille,taille,thirdRowTitles[0]));
 
-		for (int i=1; i<10 ; i++){
+		for (int i=1; i<10 ; i++)
+		{
 			listCases.put(matchKeys.get(firstRowTitles[i]), new Case(firstRow+i*(taille+1),taille,taille,taille, firstRowTitles[i]));
 			listCases.put(matchKeys.get(secondRowTitles[i]), new Case(secondRow+i*(taille+1),2*taille+1,taille,taille,secondRowTitles[i]));
 		}
-		for (int i=0; i<6;i++){
-			listCases.put(matchKeys.get(thirdRowTitles[i]),new Case(thirdRow+i*(taille+1),3*taille+2,taille,taille,thirdRowTitles[i]));
-		}
+		
+		for (int i=0; i<6;i++)
+			listCases.put(matchKeys.get(thirdRowTitles[i]), new Case(thirdRow+i*(taille+1),3*taille+2,taille,taille,thirdRowTitles[i]));
+		
 		return listCases;
 	}
 }
