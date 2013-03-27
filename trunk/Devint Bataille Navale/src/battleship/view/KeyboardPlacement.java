@@ -12,7 +12,7 @@ import org.newdawn.slick.Input;
 import battleship.game.Game;
 
 
-public class KeyboardDefence extends BattleShipView {
+public class KeyboardPlacement extends BattleShipView {
 	
 	// Liste des 3 cases formant le bateau courant
 	private LinkedList<Case> tmpBoat;
@@ -21,7 +21,7 @@ public class KeyboardDefence extends BattleShipView {
 	private LinkedList<LinkedList<Case>> finalBoats;
 
 	
-	public KeyboardDefence(int h, int w, Game g) {
+	public KeyboardPlacement(int h, int w, Game g) {
 		super("KeyboardDefence");
 		
 		this.hook = g;

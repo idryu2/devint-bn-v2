@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class KeyboardAttack extends BattleShipView {
+public class KeyboardBattle extends BattleShipView {
 	
-	protected KeyboardAttack(String title) {
+	protected KeyboardBattle(String title) {
 		super(title);
 	}
 
