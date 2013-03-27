@@ -6,6 +6,7 @@ import battleship.ai.AIPlayer;
 import battleship.config.Config;
 import battleship.services.sounds.*;
 import battleship.view.BattleShipView;
+import battleship.view.KeyboardBattle;
 import battleship.view.KeyboardPlacement;
 
 /**
@@ -64,9 +65,10 @@ public class Game {
 	{
 		try 
 		{
-			this.currentview = new KeyboardPlacement(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this);
+			this.currentview = new KeyboardPlacement(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT, this);
+			//this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this);
 			this.gameContainer = new AppGameContainer(this.currentview);
-			this.gameContainer.setDisplayMode(1000, 550, false);
+			this.gameContainer.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT, false);
 			this.gameContainer.start();
 		} 
 		catch (SlickException e) 
