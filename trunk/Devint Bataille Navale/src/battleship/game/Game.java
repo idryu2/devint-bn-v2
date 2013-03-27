@@ -70,8 +70,9 @@ public class Game {
 			this.currentview = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 //			this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 			this.gameContainer = new AppGameContainer(this.currentview);
-			this.gameContainer.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT, false);
+			this.gameContainer.setDisplayMode(1000,500, false);
 			this.gameContainer.start();
+			// DisplayMode[] modes = Display.getAvailableDisplayModes();
 		} 
 		catch (SlickException e) 
 		{

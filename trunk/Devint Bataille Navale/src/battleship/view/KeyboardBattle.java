@@ -45,7 +45,7 @@ public class KeyboardBattle extends BattleShipView {
 
 	@Override
 	public void update(GameContainer container, int arg1) {
-
+		super.update(container, arg1);
 		if(isAIPlayer){
 			//this.hook.AIPlay();
 			isAIPlayer = !isAIPlayer;

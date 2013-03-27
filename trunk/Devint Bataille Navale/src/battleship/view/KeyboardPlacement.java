@@ -183,6 +183,7 @@ public class KeyboardPlacement extends BattleShipView {
 	@Override
 	public void update(GameContainer container, int delta) 
 	{
+		super.update(container, delta);
 		Input input = container.getInput();
 
 		for(Entry<Integer, Case> maCase : cases.entrySet())
