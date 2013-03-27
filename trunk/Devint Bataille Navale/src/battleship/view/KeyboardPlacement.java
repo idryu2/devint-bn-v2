@@ -78,21 +78,22 @@ public class KeyboardPlacement extends BattleShipView {
 		
 		String firstCase = lc.getFirst().getName();
 		
-		int ind = getIndexOf(this.firstRowTitles, firstCase);
+		int ind1 = getIndexOf(this.firstRowTitles, firstCase);
+		int ind2, ind3;
 		
-		if (ind != -1)
+		if (ind1 != -1)
 		{
 			
 		}
 		
-		ind = getIndexOf(this.secondRowTitles, firstCase);
-		if (ind != -1)
+		ind1 = getIndexOf(this.secondRowTitles, firstCase);
+		if (ind1 != -1)
 		{
 			
 		}
 		
-		ind = getIndexOf(this.thirdRowTitles, firstCase);
-		if (ind != -1)
+		ind1 = getIndexOf(this.thirdRowTitles, firstCase);
+		if (ind1 != -1)
 		{
 			
 		}
