@@ -11,7 +11,7 @@ import javax.swing.WindowConstants;
 import battleship.game.Game;
 import battleship.menu.BaseMenu;
 
-public class Menu extends BaseMenu {
+public class MenuDifficulte extends BaseMenu {
 
 	private String listeJoueur = "joueur.ser";
 //	private Joueur joueur;
@@ -62,7 +62,7 @@ public class Menu extends BaseMenu {
 	 * @param nomOptions
 	 *            tableau contenant les nom des options
 	 */
-	public Menu(String title, String[] nomOptions) {
+	public MenuDifficulte(String title, String[] nomOptions) {
 		super(title, nomOptions);
 	}
 
@@ -111,27 +111,17 @@ public class Menu extends BaseMenu {
 		
 		if(i ==0) 
 		{
-			/*String[] choix = { "Facile", "Normal", "Difficile" };
-
-			str2 = (String) new JOptionPane().showInputDialog(null,
-					"Choisis le mode de difficulté",
-					"Choix de la difficulté", JOptionPane.QUESTION_MESSAGE, null,
-					choix, choix[2]);
-			if (str2 != null)
-				new Game();
-				
-				*/
-			Fenetre fe = new Fenetre("Niveau de difficulté");
-			String[] nomOptions = {"Facile", "Normal","Difficile"}; 
-	        MenuDifficulte m = new MenuDifficulte("Niveau de difficulté", nomOptions);
-	        fe.add(m);
-	        fe.setExtendedState(fe.MAXIMIZED_BOTH);
-	        m.requestFocus();
-	        //new Game();
+	        new Game();
 		}
-		
-		if (i == 1)
-			System.exit(0);
+		else if(i == 1)
+		{
+			new Game();
+		}
+		else if(i==2)
+		{
+			new Game();
+		}
+			
 	
 	}
 
