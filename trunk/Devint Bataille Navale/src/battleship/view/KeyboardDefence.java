@@ -56,12 +56,12 @@ public class KeyboardDefence extends BattleShipView {
 		return false;
 	}
 	
-	private boolean arrayContains(String[] array, String element)
+	private int getIndexOf(String[] array, String element)
 	{
-		for (String s : array)
-			if (s.equals(element))
-				return true;
-		return false;
+		for (int i = 0; i < array.length; i++)
+			if (array[i].equals(element))
+				return i;
+		return -1;
 	}
 	
 	/**
@@ -78,15 +78,15 @@ public class KeyboardDefence extends BattleShipView {
 		
 		String firstCase = lc.getFirst().getName();
 		
-		if (arrayContains(this.firstRowTitles, firstCase))
+		if (getIndexOf(this.firstRowTitles, firstCase) != -1)
 		{
 			
 		}
-		else if (arrayContains(this.secondRowTitles, firstCase))
+		else if (getIndexOf(this.secondRowTitles, firstCase) != -1)
 		{
 			
 		}
-		else if (arrayContains(this.thirdRowTitles, firstCase))
+		else if (getIndexOf(this.thirdRowTitles, firstCase) != -1)
 		{
 			
 		}
