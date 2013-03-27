@@ -65,8 +65,8 @@ public class Game {
 	{
 		try 
 		{
-			this.currentview = new KeyboardPlacement(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT, this);
-			//this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT, Config.WINDOW_WIDTH, this);
+//			this.currentview = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
+			this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 			this.gameContainer = new AppGameContainer(this.currentview);
 			this.gameContainer.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT, false);
 			this.gameContainer.start();
