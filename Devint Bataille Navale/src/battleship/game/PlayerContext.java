@@ -22,4 +22,22 @@ public class PlayerContext {
 		this.boats = new ArrayList<Boat>();
 		this.score = 0;
 	}
+
+	public ArrayList<Boat> getBoats() {
+		return boats;
+	}
+
+	public void setBoats(ArrayList<Boat> boats) {
+		this.boats = boats;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	
 }

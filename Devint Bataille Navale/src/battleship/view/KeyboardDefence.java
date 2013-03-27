@@ -87,6 +87,14 @@ public class KeyboardDefence extends BattleShipView {
 		return false;
 	}
 	
+	private boolean arrayContains(String[] array, String element)
+	{
+		for (String s : array)
+			if (s.equals(element))
+				return true;
+		return false;
+	}
+	
 	/**
 	 * Détermine si la forme engendrée par les 3 cases représente un bateau correct
 	 * ou non
@@ -99,7 +107,20 @@ public class KeyboardDefence extends BattleShipView {
 		if (lc.size() != 3)
 			return false;
 		
+		String firstCase = lc.getFirst().getName();
 		
+		if (arrayContains(this.firstRowTitles, firstCase))
+		{
+			
+		}
+		else if (arrayContains(this.secondRowTitles, firstCase))
+		{
+			
+		}
+		else if (arrayContains(this.thirdRowTitles, firstCase))
+		{
+			
+		}
 		
 		return true;
 	}
