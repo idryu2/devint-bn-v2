@@ -1,6 +1,6 @@
 package battleship.ai;
 
-import battleship.game.Case;
+import battleship.view.Case;
 
 /**
  * interface IPlayer
