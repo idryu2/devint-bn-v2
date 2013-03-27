@@ -73,14 +73,23 @@ public class KeyboardPlacement extends BattleShipView {
 		if (lc.size() != 3)
 			return false;
 		
-		String firstCase = lc.getFirst().getName();
+		String firstCase = lc.get(0).getName();
+		String secondCase = lc.get(1).getName();
+		String thirdCase = lc.get(2).getName();
 		
 		int ind1 = getIndexOf(this.firstRowTitles, firstCase);
 		int ind2, ind3;
 		
 		if (ind1 != -1)
 		{
+			ind2 = getIndexOf(this.firstRowTitles, secondCase);
 			
+			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
+			{
+				ind3 = getIndexOf(this.firstRowTitles, thirdCase);
+				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
+					return true;
+			}
 		}
 		
 		ind1 = getIndexOf(this.secondRowTitles, firstCase);
@@ -95,7 +104,7 @@ public class KeyboardPlacement extends BattleShipView {
 			
 		}
 		
-		return true;
+		return false;
 	}
 	
 	/**
@@ -125,7 +134,10 @@ public class KeyboardPlacement extends BattleShipView {
 			}
 
 			if (tmpBoat.contains(maCase.getValue()))
-				maCase.getValue().setColor(Color.green);
+				if (isBoatCorrect(tmpBoat))
+					maCase.getValue().setColor(Color.orange);
+				else	
+					maCase.getValue().setColor(Color.green);
 
 			for (LinkedList<Case> lc : this.finalBoats)
 				if (lc.contains(maCase.getValue()))
