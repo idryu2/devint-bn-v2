@@ -8,6 +8,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 import battleship.game.Game;
 import battleship.models.boats.Boat;
@@ -19,12 +21,15 @@ public class KeyboardBattle extends BattleShipView {
 	private LinkedList<Case> listCaseShooted;
 	private LinkedList<Case> listCaseTouched;
 	ThreeSlotsBoat b;
+	private Sound miss ;
+	private Sound touch;
 
 	public KeyboardBattle(int h ,int w,Game g) {
 		super("KeyboardBattle", h, w, g);
 		listCaseShooted = new LinkedList<>();
 		listCaseTouched = new LinkedList<>();
 
+		// debug
 		b = new ThreeSlotsBoat();
 		b.place(this.cases.get(this.matchKeys.get("a")),this.cases.get(this.matchKeys.get("z")),this.cases.get(this.matchKeys.get("e")));
 		//this.hook.getAiplayer().getContext().getBoats().add(b);
@@ -34,6 +39,13 @@ public class KeyboardBattle extends BattleShipView {
 	@Override
 	public void init(GameContainer container) {
 		container.getGraphics().setBackground(org.newdawn.slick.Color.green );		
+		try {
+			this.miss = new Sound("data/sounds/plouf.wav");
+			this.touch = new Sound("data/sounds/plouf.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
@@ -64,10 +76,10 @@ public class KeyboardBattle extends BattleShipView {
 
 				if (maCase.getValue().equals(this.caseAttacked))
 					maCase.getValue().setColor(Color.orange);
-				
+
 				if(this.listCaseShooted.contains(maCase.getValue()))
 					maCase.getValue().setColor(Color.green);
-				
+
 				if(this.listCaseTouched.contains(maCase.getValue()))
 					maCase.getValue().setColor(Color.red);
 			}
@@ -78,7 +90,10 @@ public class KeyboardBattle extends BattleShipView {
 					this.listCaseShooted.addLast(this.caseAttacked);
 				if (!listCaseTouched.contains(caseAttacked) && boatTouched(caseAttacked))
 					this.listCaseTouched.addLast(this.caseAttacked);
-
+				if(boatTouched(caseAttacked))
+					touch.play();
+				else
+					miss.play();
 			}
 
 		}

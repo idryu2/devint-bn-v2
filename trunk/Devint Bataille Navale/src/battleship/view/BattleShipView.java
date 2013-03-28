@@ -18,6 +18,7 @@ public abstract class BattleShipView extends BasicGame {
 	protected int width;
 
 	// Décrit le clavier avec des Strings
+	protected String[] numbersRowTitles = {"1","2","3","4","5","6","7","8","9","0"};
 	protected String[] firstRowTitles = {"a","z","e","r","t","y","u","i","o","p"};
 	protected String[] secondRowTitles = {"q","s","d","f","g","h","j","k","l","m"};
 	protected String[] thirdRowTitles = {"w","x","c","v","b","n"};
@@ -42,6 +43,17 @@ public abstract class BattleShipView extends BasicGame {
 		this.hook = g;
 
 		matchKeys = new LinkedHashMap<>();
+		matchKeys.put(numbersRowTitles[0], Input.KEY_1);
+		matchKeys.put(numbersRowTitles[1], Input.KEY_2);
+		matchKeys.put(numbersRowTitles[2], Input.KEY_3);
+		matchKeys.put(numbersRowTitles[3], Input.KEY_4);
+		matchKeys.put(numbersRowTitles[4], Input.KEY_5);
+		matchKeys.put(numbersRowTitles[5], Input.KEY_6);
+		matchKeys.put(numbersRowTitles[6], Input.KEY_7);
+		matchKeys.put(numbersRowTitles[7], Input.KEY_8);
+		matchKeys.put(numbersRowTitles[8], Input.KEY_9);
+		matchKeys.put(numbersRowTitles[9], Input.KEY_0);
+		
 		matchKeys.put(firstRowTitles[0], Input.KEY_A);
 		matchKeys.put(firstRowTitles[1], Input.KEY_Z);
 		matchKeys.put(firstRowTitles[2], Input.KEY_E);
@@ -82,22 +94,26 @@ public abstract class BattleShipView extends BasicGame {
 	protected HashMap<Integer,Case> CreateKeyBoard(int taille)
 	{
 		HashMap<Integer,Case> listCases = new HashMap<>();
-		int firstRow = taille/2;
-		int secondRow = taille;
-		int thirdRow = taille+taille/2;
+		int numbersRow = taille/2;
+		int firstRow = taille;
+		int secondRow = taille+taille/2;
+		int thirdRow = 2*taille;
 
-		listCases.put(matchKeys.get(firstRowTitles[0]), new Case(firstRow,taille,taille,taille, firstRowTitles[0]));
-		listCases.put(matchKeys.get(secondRowTitles[0]), new Case(secondRow,2*taille+1,taille,taille,secondRowTitles[0]));
-		listCases.put(matchKeys.get(thirdRowTitles[0]), new Case(thirdRow,3*taille+2,taille,taille,thirdRowTitles[0]));
+		listCases.put(matchKeys.get(numbersRowTitles[0]), new Case(numbersRow,taille,taille,taille, numbersRowTitles[0]));
+		listCases.put(matchKeys.get(firstRowTitles[0]), new Case(firstRow,2*taille+1,taille,taille, firstRowTitles[0]));
+		listCases.put(matchKeys.get(secondRowTitles[0]), new Case(secondRow,3*taille+2,taille,taille,secondRowTitles[0]));
+		listCases.put(matchKeys.get(thirdRowTitles[0]), new Case(thirdRow,4*taille+3,taille,taille,thirdRowTitles[0]));
 
 		for (int i=1; i<10 ; i++)
 		{
-			listCases.put(matchKeys.get(firstRowTitles[i]), new Case(firstRow+i*(taille+1),taille,taille,taille, firstRowTitles[i]));
-			listCases.put(matchKeys.get(secondRowTitles[i]), new Case(secondRow+i*(taille+1),2*taille+1,taille,taille,secondRowTitles[i]));
+			listCases.put(matchKeys.get(numbersRowTitles[i]), new Case(numbersRow+i*(taille+1),taille,taille,taille,numbersRowTitles[i]));
+			listCases.put(matchKeys.get(firstRowTitles[i]), new Case(firstRow+i*(taille+1),2*taille+1,taille,taille, firstRowTitles[i]));
+			listCases.put(matchKeys.get(secondRowTitles[i]), new Case(secondRow+i*(taille+1),3*taille+2,taille,taille,secondRowTitles[i]));
+			
 		}
 
 		for (int i=0; i<6;i++)
-			listCases.put(matchKeys.get(thirdRowTitles[i]), new Case(thirdRow+i*(taille+1),3*taille+2,taille,taille,thirdRowTitles[i]));
+			listCases.put(matchKeys.get(thirdRowTitles[i]), new Case(thirdRow+i*(taille+1),4*taille+3,taille,taille,thirdRowTitles[i]));
 
 		return listCases;
 	}
