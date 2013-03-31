@@ -32,6 +32,7 @@ public class Game {
 		
 		this.aiplayer = new AIPlayer();
 		this.realPlayerContext = new PlayerContext();
+		this.soundPlayer = new SoundPlayer();
 		
 		this.startBoatSelection();
 	}

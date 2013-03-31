@@ -11,6 +11,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+import battleship.config.Config;
 import battleship.game.Game;
 import battleship.models.boats.Boat;
 import battleship.models.boats.ThreeSlotsBoat;
@@ -25,7 +26,7 @@ public class KeyboardBattle extends BattleShipView {
 	private Sound touch;
 
 	public KeyboardBattle(int h ,int w,Game g) {
-		super("KeyboardBattle", h, w, g);
+		super(Config.WINDOW_TITLE, h, w, g);
 		listCaseShooted = new LinkedList<>();
 		listCaseTouched = new LinkedList<>();
 

@@ -10,6 +10,7 @@ import battleship.view.Case;
  * @author Baptiste Viale
  *
  */
+@Deprecated
 public class OneSlotBoat extends Boat {
 
 	public OneSlotBoat()
