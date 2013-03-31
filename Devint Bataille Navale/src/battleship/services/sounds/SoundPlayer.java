@@ -1,6 +1,7 @@
 package battleship.services.sounds;
 
 import battleship.config.Config;
+import org.newdawn.slick.*;
 
 /**
  * SoundPlayer
@@ -12,10 +13,13 @@ import battleship.config.Config;
  */
 public class SoundPlayer {
 
+	private Sound currentSound;
+	
 	/**
 	 * Joue un son donné
 	 * 
 	 * @param st
+	 * @throws SlickException 
 	 */
 	public void PlaySound(SoundType st)
 	{
@@ -23,6 +27,22 @@ public class SoundPlayer {
 		
 		if (soundPath == null)
 			return;
+		
+		if (this.currentSound != null && this.currentSound.playing())
+			this.currentSound.stop();
+		
+		try 
+		{
+			this.currentSound = new Sound(soundPath);
+			this.currentSound.play();
+		} 
+		catch (Throwable e) 
+		{
+			System.out.println("Audio file not supported\n"+e.getMessage());
+		}
+		
 	}
+	
+	
 	
 }

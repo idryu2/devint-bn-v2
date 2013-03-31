@@ -8,8 +8,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
+import battleship.config.Config;
 import battleship.game.Game;
+import battleship.services.sounds.SoundType;
 
 
 public class KeyboardPlacement extends BattleShipView {
@@ -22,7 +25,7 @@ public class KeyboardPlacement extends BattleShipView {
 
 	
 	public KeyboardPlacement(int h, int w, Game g) {
-		super("KeyboardDefence", h, w, g);
+		super(Config.WINDOW_TITLE, h, w, g);
 
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
@@ -37,6 +40,9 @@ public class KeyboardPlacement extends BattleShipView {
 	public void init(GameContainer container) 
 	{
 		container.getGraphics().setBackground(org.newdawn.slick.Color.blue );
+
+		this.hook.getSoundPlayer().PlaySound(SoundType.EXPLOSION);
+
 	}
 	
 	/**

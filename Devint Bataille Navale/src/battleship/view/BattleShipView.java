@@ -84,7 +84,9 @@ public abstract class BattleShipView extends BasicGame {
 		matchKeys.put(thirdRowTitles[5], Input.KEY_N);
 
 		this.cases = CreateKeyBoard(this.width/14);
+		
 	}
+	
 	/**
 	 * Créé le clavier virtuel
 	 * 
@@ -117,6 +119,7 @@ public abstract class BattleShipView extends BasicGame {
 
 		return listCases;
 	}
+	
 	@Override
 	public void render(GameContainer container, Graphics g){
 		g.setColor(org.newdawn.slick.Color.white);
