@@ -1,14 +1,12 @@
 package battleship.view;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
 import battleship.config.Config;
 import battleship.game.Game;
@@ -24,12 +22,12 @@ public class KeyboardPlacement extends BattleShipView {
 	private LinkedList<LinkedList<Case>> finalBoats;
 
 	
-	public KeyboardPlacement(int h, int w, Game g) {
+	public KeyboardPlacement(int h, int w, Game g) 
+	{
 		super(Config.WINDOW_TITLE, h, w, g);
 
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
-
 	}
 	
 	/**
@@ -40,9 +38,6 @@ public class KeyboardPlacement extends BattleShipView {
 	public void init(GameContainer container) 
 	{
 		container.getGraphics().setBackground(org.newdawn.slick.Color.blue );
-
-		this.hook.getSoundPlayer().PlaySound(SoundType.EXPLOSION);
-
 	}
 	
 	/**
@@ -65,6 +60,58 @@ public class KeyboardPlacement extends BattleShipView {
 			if (array[i].equals(element))
 				return i;
 		return -1;
+	}
+	
+	private boolean checkRow(List<String[]> rows, int indCurrentRow, String firstCase, String secondCase, String thirdCase)
+	{
+		boolean isTopRow = (indCurrentRow == 0);
+		boolean isBotRow = (indCurrentRow == (rows.size() - 1));
+		int ind1, ind2, ind3;
+		
+		ind1 = getIndexOf(rows.get(indCurrentRow), firstCase);
+		if (ind1 != -1)
+		{
+			ind2 = getIndexOf(rows.get(indCurrentRow), secondCase);
+			
+			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
+			{
+				// Ligne
+				ind3 = getIndexOf(rows.get(indCurrentRow), thirdCase);
+				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
+					return true;
+				
+				if (isBotRow)
+					return false;
+				
+				// Triangle sup
+				ind3 = getIndexOf(rows.get(indCurrentRow + 1), thirdCase);
+				int shortest = (ind1 > ind2) ? ind2 : ind1;
+				int largest = (ind1 > ind2) ? ind1 : ind2;
+				
+				if (ind3 == shortest)
+					return true;
+				
+				return false;
+			}
+			
+			if (isBotRow)
+				return false;
+			
+			ind2 = getIndexOf(rows.get(indCurrentRow + 1), secondCase);
+			ind3 = getIndexOf(rows.get(indCurrentRow + 1), thirdCase);
+			
+			// Triangle inf
+			if (ind2 > -1 && ind3 > -1 && (Math.abs(ind3 - ind2) == 1))
+			{
+				int shortest = (ind2 > ind3) ? ind3 : ind2;
+				int largest = (ind2 > ind3) ? ind2 : ind3;
+				
+				if (ind1 == largest)
+					return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -90,93 +137,20 @@ public class KeyboardPlacement extends BattleShipView {
 		String secondCase = nlc.get(1).getName();
 		String thirdCase = nlc.get(2).getName();
 		
-		int ind1 = getIndexOf(this.firstRowTitles, firstCase);
-		int ind2, ind3;
+		List<String[]> rows = new ArrayList<String[]>();
+		rows.add(this.numbersRowTitles);
+		rows.add(this.firstRowTitles);
+		rows.add(this.secondRowTitles);
+		rows.add(this.thirdRowTitles);
 		
-		if (ind1 != -1)
+		for (int i = 0; i < rows.size(); i++)
 		{
-			ind2 = getIndexOf(this.firstRowTitles, secondCase);
-			
-			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
+			if (getIndexOf(rows.get(i), firstCase) != -1)
 			{
-				// Ligne
-				ind3 = getIndexOf(this.firstRowTitles, thirdCase);
-				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
-					return true;
-				
-				// Triangle sup
-				ind3 = getIndexOf(this.secondRowTitles, thirdCase);
-				int shortest = (ind1 > ind2) ? ind2 : ind1;
-				int largest = (ind1 > ind2) ? ind1 : ind2;
-				
-				if (ind3 == shortest)
-					return true;
-				
-				return false;
+				System.out.println("Check sur la ligne " + i);
+				return this.checkRow(rows, i, firstCase, secondCase, thirdCase);
 			}
-			
-			ind2 = getIndexOf(this.secondRowTitles, secondCase);
-			ind3 = getIndexOf(this.secondRowTitles, thirdCase);
-			
-			// Triangle inf
-			if (ind2 > -1 && ind3 > -1 && (Math.abs(ind3 - ind2) == 1))
-			{
-				int shortest = (ind2 > ind3) ? ind3 : ind2;
-				int largest = (ind2 > ind3) ? ind2 : ind3;
 				
-				if (ind1 == largest)
-					return true;
-			}
-		}
-		
-		ind1 = getIndexOf(this.secondRowTitles, firstCase);
-		if (ind1 != -1)
-		{
-			ind2 = getIndexOf(this.secondRowTitles, secondCase);
-			
-			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
-			{
-				ind3 = getIndexOf(this.secondRowTitles, thirdCase);
-				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
-					return true;
-				
-				ind3 = getIndexOf(this.thirdRowTitles, thirdCase);
-				int shortest = (ind1 > ind2) ? ind2 : ind1;
-				int largest = (ind1 > ind2) ? ind1 : ind2;
-				
-				if (ind3 == shortest)
-					return true;
-				
-				return false;
-			}
-			
-			ind2 = getIndexOf(this.thirdRowTitles, secondCase);
-			ind3 = getIndexOf(this.thirdRowTitles, thirdCase);
-			
-			// Triangle inf
-			if (ind2 > -1 && ind3 > -1 && (Math.abs(ind3 - ind2) == 1))
-			{
-				int shortest = (ind2 > ind3) ? ind3 : ind2;
-				int largest = (ind2 > ind3) ? ind2 : ind3;
-				
-				if (ind1 == largest)
-					return true;
-			}
-			
-		}
-		
-		ind1 = getIndexOf(this.thirdRowTitles, firstCase);
-		if (ind1 != -1)
-		{
-			ind2 = getIndexOf(this.thirdRowTitles, secondCase);
-			
-			//  Bateau en ligne
-			if (ind2 > -1 && (Math.abs(ind2 - ind1) == 1))
-			{
-				ind3 = getIndexOf(this.thirdRowTitles, thirdCase);
-				if (ind3 > -1 && ((Math.abs(ind3 - ind2) == 1) || (Math.abs(ind3 - ind2) == 1)))
-					return true;
-			}
 		}
 		
 		return false;
@@ -197,6 +171,7 @@ public class KeyboardPlacement extends BattleShipView {
 			maCase.getValue().setColor(Color.white);
 			if(input.isKeyDown(maCase.getKey()))
 			{
+				//this.hook.getSoundPlayer().PlayVoice(SoundType.DEBUG);
 				if (!tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
 				{
 					if (tmpBoat.size() >= 3)
@@ -225,6 +200,8 @@ public class KeyboardPlacement extends BattleShipView {
 				this.finalBoats.addLast(this.tmpBoat);
 				
 			this.tmpBoat = new LinkedList<>();
+			
+			this.hook.checkPlacement(this.finalBoats);
 		}
 		
 		if (input.isKeyDown(Input.KEY_BACK))
@@ -239,7 +216,6 @@ public class KeyboardPlacement extends BattleShipView {
 	public void render(GameContainer container, Graphics g)
 	{
 		super.render(container,g);
-
 	}
 
 	

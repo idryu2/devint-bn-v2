@@ -1,5 +1,8 @@
 package battleship.ai;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import battleship.view.Case;
 
 /**
@@ -11,6 +14,6 @@ import battleship.view.Case;
  */
 public interface IPlayer {
 
-	Case Play();
+	Case play(HashMap<Integer, Case> listCases, LinkedList<Case> casesShooted);
 	
 }

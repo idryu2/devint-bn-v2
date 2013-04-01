@@ -3,6 +3,7 @@ package battleship.game;
 import java.util.ArrayList;
 
 import battleship.models.boats.Boat;
+import battleship.view.Case;
 
 
 /**
@@ -38,6 +39,5 @@ public class PlayerContext {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
 	
 }

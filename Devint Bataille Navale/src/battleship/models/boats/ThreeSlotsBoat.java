@@ -18,10 +18,12 @@ public class ThreeSlotsBoat extends Boat {
 		this.nbPoints = Config.THREE_SLOTS_BOAT_SCORE;
 	}
 	
-	public void place(Case c1, Case c2, Case c3)
+	public Boat place(Case c1, Case c2, Case c3)
 	{
 		this.cases[0] = c1;
 		this.cases[1] = c2;
 		this.cases[2] = c3;
+		
+		return this;
 	}
 }
