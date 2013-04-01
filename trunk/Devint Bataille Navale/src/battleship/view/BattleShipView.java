@@ -87,6 +87,11 @@ public abstract class BattleShipView extends BasicGame {
 		
 	}
 	
+	public HashMap<Integer, Case> getCases() 
+	{
+		return cases;
+	}
+
 	/**
 	 * Créé le clavier virtuel
 	 * 

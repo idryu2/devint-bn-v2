@@ -13,7 +13,7 @@ public class Case extends Rectangle {
 	{
 		super(x, y, width, height);
 		this.name = name;
-		this.color = org.newdawn.slick.Color.white;
+		this.color = Color.white;
 	}
 
 	public String getName() 
@@ -21,12 +21,12 @@ public class Case extends Rectangle {
 		return name;
 	}
 
-	public org.newdawn.slick.Color getColor() 
+	public Color getColor() 
 	{
 		return color;
 	}
 
-	public void setColor(org.newdawn.slick.Color color)
+	public void setColor(Color color)
 	{
 		this.color = color;
 	}

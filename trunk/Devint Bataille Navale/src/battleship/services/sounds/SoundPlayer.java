@@ -17,9 +17,9 @@ public class SoundPlayer {
 	
 	/**
 	 * Joue un son donné
+	 * Stoppe le son en cours de lecture s'il y en a un
 	 * 
 	 * @param st
-	 * @throws SlickException 
 	 */
 	public void PlaySound(SoundType st)
 	{
@@ -40,9 +40,27 @@ public class SoundPlayer {
 		{
 			System.out.println("Audio file not supported\n"+e.getMessage());
 		}
-		
 	}
 	
-	
+	public void PlayVoice(SoundType st)
+	{
+		String soundPath = Config.SOUNDS_PATHS_DICTIONARY.get(st);
+		
+		if (soundPath == null)
+			return;
+		
+		if (this.currentSound != null && this.currentSound.playing())
+			return;
+		
+		try 
+		{
+			this.currentSound = new Sound(soundPath);
+			this.currentSound.play();
+		} 
+		catch (Throwable e) 
+		{
+			System.out.println("Audio file not supported\n"+e.getMessage());
+		}
+	}
 	
 }

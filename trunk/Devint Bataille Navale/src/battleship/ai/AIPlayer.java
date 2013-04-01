@@ -1,5 +1,10 @@
 package battleship.ai;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
+import java.util.Random;
+
 import battleship.game.*;
 import battleship.view.Case;
 
@@ -20,7 +25,22 @@ public class AIPlayer implements IPlayer {
 	}
 	
 	@Override
-	public Case Play() {
+	public Case play(HashMap<Integer, Case> listCases, LinkedList<Case> casesShooted) {
+		
+		Random r =  new Random();
+		int stop = r.nextInt(listCases.size());
+		int i = 0;
+		
+		for (Entry<Integer, Case> entry : listCases.entrySet())
+		{
+			if (casesShooted.contains(entry.getValue()))
+				continue;
+			
+			if (i >= stop)
+				return entry.getValue();
+			
+			i++;
+		}
 		
 		return null;
 	}
