@@ -7,6 +7,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.state.StateBasedGame;
 
 import battleship.config.Config;
 import battleship.game.Game;
@@ -19,9 +20,11 @@ public class KeyboardBattle extends BattleShipView {
 	private LinkedList<Case> playerListCaseShooted;
 	private LinkedList<Case> aiListCaseShooted;
 	
-	public KeyboardBattle(int h ,int w,Game g) 
+	public KeyboardBattle(int h ,int w, Game g) 
 	{
 		super(Config.WINDOW_TITLE, h, w, g);
+		this.ID = 1;
+		
 		playerListCaseShooted = new LinkedList<>();
 		aiListCaseShooted = new LinkedList<>();
 		
@@ -30,7 +33,7 @@ public class KeyboardBattle extends BattleShipView {
 
 
 	@Override
-	public void init(GameContainer container) 
+	public void init(GameContainer container, StateBasedGame base) 
 	{
 		// Offensive background
 		container.getGraphics().setBackground(org.newdawn.slick.Color.green);		
@@ -38,14 +41,14 @@ public class KeyboardBattle extends BattleShipView {
 
 
 	@Override
-	public void render(GameContainer container, Graphics g) 
+	public void render(GameContainer container, StateBasedGame base, Graphics g) 
 	{	
-		super.render(container, g);
+		super.render(container, base, g);
 	}
 
 	@Override
-	public void update(GameContainer container, int arg1) {
-		super.update(container, arg1);
+	public void update(GameContainer container, StateBasedGame base, int arg2) {
+		super.update(container, base, arg2);
 		
 		if (isAIPlayerTurn)
 		{
@@ -180,5 +183,5 @@ public class KeyboardBattle extends BattleShipView {
 		
 		return false;
 	}
-
+	
 }

@@ -4,15 +4,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 import battleship.game.Game;
 
-public abstract class BattleShipView extends BasicGame {
-
+public abstract class BattleShipView extends BasicGameState {
+	
+	protected int ID;
+	
 	// Dimensions de la fenêtre
 	protected int height;
 	protected int width;
@@ -36,8 +39,9 @@ public abstract class BattleShipView extends BasicGame {
 
 	protected BattleShipView(String title, int h , int w, Game g) 
 	{
-		super(title);
-
+		super();
+		
+		this.ID = -1;
 		this.height = h;
 		this.width = w;
 		this.hook = g;
@@ -126,7 +130,7 @@ public abstract class BattleShipView extends BasicGame {
 	}
 	
 	@Override
-	public void render(GameContainer container, Graphics g){
+	public void render(GameContainer container, StateBasedGame base, Graphics g){
 		g.setColor(org.newdawn.slick.Color.white);
 		for(Entry<Integer, Case> maCase : cases.entrySet())
 		{
@@ -140,12 +144,18 @@ public abstract class BattleShipView extends BasicGame {
 	}
 
 	@Override
-	public abstract void init(GameContainer arg0);
+	public abstract void init(GameContainer arg0, StateBasedGame arg1);
 
 	@Override
-	public void update(GameContainer container, int arg1)
+	public void update(GameContainer container, StateBasedGame base, int arg2)
 	{
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
-			this.hook.exit();
+			System.exit(0);
+	}
+	
+	@Override
+	public int getID() 
+	{
+		return this.ID;
 	}
 }

@@ -7,6 +7,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.state.StateBasedGame;
 
 import battleship.config.Config;
 import battleship.game.Game;
@@ -25,7 +26,8 @@ public class KeyboardPlacement extends BattleShipView {
 	public KeyboardPlacement(int h, int w, Game g) 
 	{
 		super(Config.WINDOW_TITLE, h, w, g);
-
+		this.ID = 0;
+		
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
 	}
@@ -35,7 +37,7 @@ public class KeyboardPlacement extends BattleShipView {
 	 * 
 	 */
 	@Override
-	public void init(GameContainer container) 
+	public void init(GameContainer container, StateBasedGame base) 
 	{
 		container.getGraphics().setBackground(org.newdawn.slick.Color.blue );
 	}
@@ -161,9 +163,9 @@ public class KeyboardPlacement extends BattleShipView {
 	 * 
 	 */
 	@Override
-	public void update(GameContainer container, int delta) 
+	public void update(GameContainer container, StateBasedGame base, int delta) 
 	{
-		super.update(container, delta);
+		super.update(container, base, delta);
 		Input input = container.getInput();
 
 		for(Entry<Integer, Case> maCase : cases.entrySet())
@@ -213,10 +215,12 @@ public class KeyboardPlacement extends BattleShipView {
 	 * 
 	 */
 	@Override
-	public void render(GameContainer container, Graphics g)
+	public void render(GameContainer container, StateBasedGame base, Graphics g)
 	{
-		super.render(container,g);
+		super.render(container, base, g);
 	}
+
+
 
 	
 }
