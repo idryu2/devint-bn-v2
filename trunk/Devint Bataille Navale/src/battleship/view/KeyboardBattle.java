@@ -133,6 +133,10 @@ public class KeyboardBattle extends BattleShipView {
 				this.changeTurn(container);
 			}
 		}
+		if(input.isKeyDown(Input.KEY_TAB))
+		{
+			// TODO;
+		}
 	}
 
 	@SuppressWarnings("static-access")

@@ -89,7 +89,7 @@ public abstract class BattleShipView extends BasicGameState {
 		matchKeys.put(thirdRowTitles[4], Input.KEY_B);
 		matchKeys.put(thirdRowTitles[5], Input.KEY_N);
 
-		this.cases = CreateKeyBoard(this.width/14);
+		this.cases = CreateKeyBoard(this.width/12);
 		
 	}
 	

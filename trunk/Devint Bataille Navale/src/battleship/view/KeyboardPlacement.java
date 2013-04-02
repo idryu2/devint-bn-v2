@@ -220,7 +220,7 @@ public class KeyboardPlacement extends BattleShipView {
 		super.render(container, base, g);
 
 		g.drawString("Place tes bateaux",200,this.height-100);
-		g.drawString("Il te reste "+(3-this.finalBoats.size())+" à placer !",200,this.height-80);
+		g.drawString("Il te reste "+(3-this.finalBoats.size())+(this.finalBoats.size()<2?" bateaux":" bateau")+" à placer !",200,this.height-80);
 	}
 
 
