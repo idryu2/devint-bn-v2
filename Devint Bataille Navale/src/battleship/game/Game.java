@@ -1,5 +1,7 @@
 package battleship.game;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.LinkedList;
 
 import org.newdawn.slick.*;
@@ -115,7 +117,6 @@ public class Game extends StateBasedGame {
 		this.aiplayer.getContext().getBoats().add(b1);
 		this.aiplayer.getContext().getBoats().add(b2);
 		this.aiplayer.getContext().getBoats().add(b3);
-		
 	}
 
 	@Override
