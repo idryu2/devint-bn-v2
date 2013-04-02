@@ -44,6 +44,10 @@ public class KeyboardBattle extends BattleShipView {
 	public void render(GameContainer container, StateBasedGame base, Graphics g) 
 	{	
 		super.render(container, base, g);
+		if (this.isAIPlayerTurn)
+			g.drawString("C'est à l'ordinateur de jouer, appuis sur entrée", 200,this.height-100);
+		else
+			g.drawString("C'est à toi de jouer, choisis la case que tu souhaite attaquer et appuis sur entrée", 200,this.height-100);
 	}
 
 	@Override
@@ -83,14 +87,13 @@ public class KeyboardBattle extends BattleShipView {
 				if (this.boatTouched(maCase.getValue()))
 					maCase.getValue().setColor(Color.red);
 				else
-					maCase.getValue().setColor(Color.green);
+					maCase.getValue().setColor(container.getGraphics().getBackground());
 			
 			if (this.isAIPlayerTurn && this.aiListCaseShooted.contains(maCase.getValue()))
 				if (this.boatTouched(maCase.getValue()))
 					maCase.getValue().setColor(Color.red);
 				else
-					maCase.getValue().setColor(Color.green);
-			
+					maCase.getValue().setColor(container.getGraphics().getBackground());
 		}
 		
 		if (this.caseAttacked != null)
@@ -152,12 +155,12 @@ public class KeyboardBattle extends BattleShipView {
 		// Set the defensive view
 		if (this.isAIPlayerTurn)
 		{
-			container.getGraphics().setBackground(org.newdawn.slick.Color.blue);
+			container.getGraphics().setBackground(org.newdawn.slick.Color.cyan);
 		}
 		// Set the offensive view
 		else
 		{
-			container.getGraphics().setBackground(org.newdawn.slick.Color.green);
+			container.getGraphics().setBackground(org.newdawn.slick.Color.blue);
 		}
 	}
 	
