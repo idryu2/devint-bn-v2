@@ -5,6 +5,8 @@ import java.awt.HeadlessException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
+import battleship.config.Config;
+
 
 public class Main {
 
@@ -26,31 +28,26 @@ public class Main {
 		} 
 		catch (SlickException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
 		
 		try 
 		{
-			container.setDisplayMode(
-					java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-					java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, 
-					true);
+			container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
 		} 
 		catch (Exception e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try 
 		{
+			container.setShowFPS(false);
 			container.start();
 		} 
 		catch (SlickException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			

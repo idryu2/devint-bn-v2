@@ -218,6 +218,9 @@ public class KeyboardPlacement extends BattleShipView {
 	public void render(GameContainer container, StateBasedGame base, Graphics g)
 	{
 		super.render(container, base, g);
+
+		g.drawString("Place tes bateaux",200,this.height-100);
+		g.drawString("Il te reste "+(3-this.finalBoats.size())+" à placer !",200,this.height-80);
 	}
 
 
