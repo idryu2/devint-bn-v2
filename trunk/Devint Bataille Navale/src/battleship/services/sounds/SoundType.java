@@ -9,6 +9,5 @@ package battleship.services.sounds;
  */
 public enum SoundType {
 	EXPLOSION,
-	MISS, 
-	DEBUG
+	MISS
 }

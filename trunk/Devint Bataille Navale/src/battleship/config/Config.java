@@ -27,8 +27,7 @@ public class Config {
 	public static HashMap<SoundType, String> SOUNDS_PATHS_DICTIONARY = new HashMap<SoundType, String>();
 	static 
 	{
-		SOUNDS_PATHS_DICTIONARY.put(SoundType.EXPLOSION, "resources/sounds/explosion.wav");
-		SOUNDS_PATHS_DICTIONARY.put(SoundType.DEBUG, "resources/sounds/debug_a.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.EXPLOSION, "resources/sounds/touche2.wav");
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.MISS, "resources/sounds/plouf.wav");
 	}
 	
