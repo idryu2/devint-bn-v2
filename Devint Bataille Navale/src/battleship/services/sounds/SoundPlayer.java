@@ -21,7 +21,7 @@ public class SoundPlayer {
 	 * 
 	 * @param st
 	 */
-	public void PlaySound(SoundType st)
+	public void playSound(SoundType st)
 	{
 		String soundPath = Config.SOUNDS_PATHS_DICTIONARY.get(st);
 		
@@ -42,7 +42,7 @@ public class SoundPlayer {
 		}
 	}
 	
-	public void PlayVoice(SoundType st)
+	public void playVoice(SoundType st)
 	{
 		String soundPath = Config.SOUNDS_PATHS_DICTIONARY.get(st);
 		
@@ -61,6 +61,14 @@ public class SoundPlayer {
 		{
 			System.out.println("Audio file not supported\n"+e.getMessage());
 		}
+	}
+	
+	public boolean isSoundPlaying()
+	{
+		if (this.currentSound == null)
+			return false;
+		
+		return this.currentSound.playing();
 	}
 	
 }

@@ -15,7 +15,6 @@ import battleship.services.sounds.SoundType;
 
 public class KeyboardBattle extends BattleShipView {
 	private boolean isAIPlayerTurn;
-	private int aiPlayerTurnRenderingRemainingTicks;
 	private Case caseAttacked;
 	private LinkedList<Case> playerListCaseShooted;
 	private LinkedList<Case> aiListCaseShooted;
@@ -27,7 +26,6 @@ public class KeyboardBattle extends BattleShipView {
 		aiListCaseShooted = new LinkedList<>();
 		
 		isAIPlayerTurn = false;
-		aiPlayerTurnRenderingRemainingTicks = 0;
 	}
 
 
@@ -48,17 +46,6 @@ public class KeyboardBattle extends BattleShipView {
 	@Override
 	public void update(GameContainer container, int arg1) {
 		super.update(container, arg1);
-		
-		if (this.aiPlayerTurnRenderingRemainingTicks > 0)
-		{
-			this.aiPlayerTurnRenderingRemainingTicks--;
-			System.out.println("counter : " + this.aiPlayerTurnRenderingRemainingTicks);
-			return;
-		}
-		else if (isAIPlayerTurn)
-		{
-			this.changeTurn(container);
-		}
 		
 		if (isAIPlayerTurn)
 		{
@@ -121,7 +108,6 @@ public class KeyboardBattle extends BattleShipView {
 				else
 					this.caseAttacked.setColor(Color.green);
 				
-				this.aiPlayerTurnRenderingRemainingTicks = Integer.MAX_VALUE; 
 			}
 			else
 			{
@@ -132,22 +118,21 @@ public class KeyboardBattle extends BattleShipView {
 			}
 			
 			if (this.boatTouched(caseAttacked))
-				this.hook.getSoundPlayer().PlaySound(SoundType.EXPLOSION);
+				this.hook.getSoundPlayer().playSound(SoundType.EXPLOSION);
 			else
-				this.hook.getSoundPlayer().PlaySound(SoundType.MISS);
+				this.hook.getSoundPlayer().playSound(SoundType.MISS);
 			
-			if (endOfTurn && aiPlayerTurnRenderingRemainingTicks <= 0)
+			if (endOfTurn)
 			{
 				this.changeTurn(container);
 			}
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	private void changeTurn(GameContainer container)
 	{
-		System.out.println("Was it ia turn ? " + (this.isAIPlayerTurn) + ". And now it changes !");
 		this.isAIPlayerTurn = !this.isAIPlayerTurn;
-		this.aiPlayerTurnRenderingRemainingTicks = 0;
 		this.caseAttacked = null;
 		this.switchView(container);
 		
