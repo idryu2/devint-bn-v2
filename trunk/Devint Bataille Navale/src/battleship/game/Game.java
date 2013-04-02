@@ -73,7 +73,10 @@ public class Game {
 			this.currentview = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 //			this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 			this.gameContainer = new AppGameContainer(this.currentview);
-			this.gameContainer.setDisplayMode(1000,500, false);
+			this.gameContainer.setDisplayMode(
+					java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
+					java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, 
+					true);
 			this.gameContainer.start();
 		} 
 		catch (SlickException e) 
@@ -122,14 +125,26 @@ public class Game {
 		try 
 		{
 			this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
+			
 			this.gameContainer = new AppGameContainer(this.currentview);
-			this.gameContainer.setDisplayMode(1000,500, false);
+			this.gameContainer.setDisplayMode(
+					java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
+					java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, 
+					true);
+			
 			this.gameContainer.start();
 		} 
 		catch (SlickException e) 
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void exit()
+	{
+		this.gameContainer.destroy();
+		this.gameContainer.exit();
+		System.exit(0);
 	}
 	
 }

@@ -146,6 +146,6 @@ public abstract class BattleShipView extends BasicGame {
 	public void update(GameContainer container, int arg1)
 	{
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
-			System.exit(0);
+			this.hook.exit();
 	}
 }
