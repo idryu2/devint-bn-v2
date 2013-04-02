@@ -9,7 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
-import battleship.config.Config;
 import battleship.game.Game;
 import battleship.models.boats.Boat;
 import battleship.services.sounds.SoundType;
@@ -22,7 +21,7 @@ public class KeyboardBattle extends BattleShipView {
 	
 	public KeyboardBattle(int h ,int w, Game g) 
 	{
-		super(Config.WINDOW_TITLE, h, w, g);
+		super(h, w, g);
 		this.ID = 1;
 		
 		playerListCaseShooted = new LinkedList<>();
@@ -35,8 +34,7 @@ public class KeyboardBattle extends BattleShipView {
 	@Override
 	public void init(GameContainer container, StateBasedGame base) 
 	{
-		// Offensive background
-		container.getGraphics().setBackground(org.newdawn.slick.Color.green);		
+	
 	}
 
 
@@ -45,14 +43,17 @@ public class KeyboardBattle extends BattleShipView {
 	{	
 		super.render(container, base, g);
 		if (this.isAIPlayerTurn)
-			g.drawString("C'est à l'ordinateur de jouer, appuis sur entrée", 200,this.height-100);
+			g.drawString("C'est à l'ordinateur de jouer, appuie sur entrée", 200, this.height-100);
 		else
-			g.drawString("C'est à toi de jouer, choisis la case que tu souhaite attaquer et appuis sur entrée", 200,this.height-100);
+			g.drawString("C'est à toi de jouer, choisis la case que tu souhaite attaquer et appuie sur entrée", 200, this.height-100);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void update(GameContainer container, StateBasedGame base, int arg2) {
 		super.update(container, base, arg2);
+		
+		System.out.println("In update. Ai turn = " + isAIPlayerTurn);
 		
 		if (isAIPlayerTurn)
 		{
@@ -99,7 +100,6 @@ public class KeyboardBattle extends BattleShipView {
 		if (this.caseAttacked != null)
 			this.caseAttacked.setColor(Color.orange);
 		
-		
 		if (input.isKeyDown(Input.KEY_ENTER))
 		{
 			boolean endOfTurn = true;
@@ -123,14 +123,27 @@ public class KeyboardBattle extends BattleShipView {
 					endOfTurn = false;
 			}
 			
-			if (this.boatTouched(caseAttacked))
-				this.hook.getSoundPlayer().playSound(SoundType.EXPLOSION);
+			if (this.hook.isSoundEnabled())
+				if (this.boatTouched(caseAttacked))
+					this.hook.getSoundPlayer().playSound(SoundType.EXPLOSION);
+				else
+					this.hook.getSoundPlayer().playSound(SoundType.MISS);
 			else
-				this.hook.getSoundPlayer().playSound(SoundType.MISS);
+				if (this.boatTouched(caseAttacked))
+					System.out.println("[Sound] Explosion !");
+				else
+					System.out.println("[Sound] Miss !");
 			
 			if (endOfTurn)
 			{
 				this.changeTurn(container);
+			}
+			
+			try {
+				Thread.currentThread().sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if(input.isKeyDown(Input.KEY_TAB))

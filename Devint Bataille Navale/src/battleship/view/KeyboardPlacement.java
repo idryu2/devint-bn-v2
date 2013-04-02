@@ -9,7 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
-import battleship.config.Config;
 import battleship.game.Game;
 import battleship.services.sounds.SoundType;
 
@@ -25,7 +24,7 @@ public class KeyboardPlacement extends BattleShipView {
 	
 	public KeyboardPlacement(int h, int w, Game g) 
 	{
-		super(Config.WINDOW_TITLE, h, w, g);
+		super(h, w, g);
 		this.ID = 0;
 		
 		this.tmpBoat = new LinkedList<>();
@@ -148,10 +147,7 @@ public class KeyboardPlacement extends BattleShipView {
 		for (int i = 0; i < rows.size(); i++)
 		{
 			if (getIndexOf(rows.get(i), firstCase) != -1)
-			{
-				System.out.println("Check sur la ligne " + i);
 				return this.checkRow(rows, i, firstCase, secondCase, thirdCase);
-			}
 				
 		}
 		
@@ -173,7 +169,6 @@ public class KeyboardPlacement extends BattleShipView {
 			maCase.getValue().setColor(Color.white);
 			if(input.isKeyDown(maCase.getKey()))
 			{
-				//this.hook.getSoundPlayer().PlayVoice(SoundType.DEBUG);
 				if (!tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
 				{
 					if (tmpBoat.size() >= 3)
