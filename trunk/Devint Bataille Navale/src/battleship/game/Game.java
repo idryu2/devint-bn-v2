@@ -3,6 +3,7 @@ package battleship.game;
 import java.util.LinkedList;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 import battleship.ai.AIPlayer;
 import battleship.config.Config;
@@ -21,17 +22,19 @@ import battleship.view.KeyboardPlacement;
  * @author Baptiste Viale
  *
  */
-public class Game {
+public class Game extends StateBasedGame {
 
 	private Level difficulty;
 	private AIPlayer aiplayer;
 	private PlayerContext realPlayerContext;
 	private SoundPlayer soundPlayer;
-	private AppGameContainer gameContainer;
-	private BattleShipView currentview;
+	private KeyboardBattle kbbView;
+	private KeyboardPlacement kbpView;
 	
 	public Game()
 	{
+		super(Config.WINDOW_TITLE);
+		
 		// default value
 		this.difficulty = Level.EASY;
 		
@@ -39,7 +42,10 @@ public class Game {
 		this.realPlayerContext = new PlayerContext();
 		this.soundPlayer = new SoundPlayer();
 		
-		this.startBoatSelection();
+		this.kbpView = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
+		this.kbbView = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
+		
+		//this.startBoatSelection();
 	}
 
 	public Level getDifficulty() 
@@ -66,23 +72,9 @@ public class Game {
 	 * Launch the boat selection view
 	 * 
 	 */
-	private void startBoatSelection() 
+	public void startBoatSelection() 
 	{
-		try 
-		{
-			this.currentview = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
-//			this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
-			this.gameContainer = new AppGameContainer(this.currentview);
-			this.gameContainer.setDisplayMode(
-					java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-					java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, 
-					true);
-			this.gameContainer.start();
-		} 
-		catch (SlickException e) 
-		{
-			e.printStackTrace();
-		}
+		this.enterState(this.kbpView.getID());
 	}
 
 	public void checkPlacement(LinkedList<LinkedList<Case>> finalBoats) 
@@ -102,49 +94,35 @@ public class Game {
 				this.realPlayerContext.getBoats().add(b);
 		}
 		
+		// change view
+		//
+		this.enterState(this.kbbView.getID());
+		
 		// add the boats to the ai player (debug)
 		//
-		Boat b1 = new ThreeSlotsBoat().place(this.currentview.getCases().get(Input.KEY_B),
-											this.currentview.getCases().get(Input.KEY_N),
-											this.currentview.getCases().get(Input.KEY_H));
+		Boat b1 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_B),
+											this.kbbView.getCases().get(Input.KEY_N),
+											this.kbbView.getCases().get(Input.KEY_H));
 		
-		Boat b2 = new ThreeSlotsBoat().place(this.currentview.getCases().get(Input.KEY_K),
-											this.currentview.getCases().get(Input.KEY_L),
-											this.currentview.getCases().get(Input.KEY_M));
+		Boat b2 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_K),
+											this.kbbView.getCases().get(Input.KEY_L),
+											this.kbbView.getCases().get(Input.KEY_M));
 		
-		Boat b3 = new ThreeSlotsBoat().place(this.currentview.getCases().get(Input.KEY_I),
-											this.currentview.getCases().get(Input.KEY_O),
-											this.currentview.getCases().get(Input.KEY_P));
+		Boat b3 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_I),
+											this.kbbView.getCases().get(Input.KEY_O),
+											this.kbbView.getCases().get(Input.KEY_P));
 		
 		this.aiplayer.getContext().getBoats().add(b1);
 		this.aiplayer.getContext().getBoats().add(b2);
 		this.aiplayer.getContext().getBoats().add(b3);
 		
-		// change the view
-		//
-		try 
-		{
-			this.currentview = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
-			
-			this.gameContainer = new AppGameContainer(this.currentview);
-			this.gameContainer.setDisplayMode(
-					java.awt.Toolkit.getDefaultToolkit().getScreenSize().width,
-					java.awt.Toolkit.getDefaultToolkit().getScreenSize().height, 
-					true);
-			
-			this.gameContainer.start();
-		} 
-		catch (SlickException e) 
-		{
-			e.printStackTrace();
-		}
 	}
-	
-	public void exit()
+
+	@Override
+	public void initStatesList(GameContainer arg0) throws SlickException 
 	{
-		this.gameContainer.destroy();
-		this.gameContainer.exit();
-		System.exit(0);
+		this.addState(this.kbpView);
+		this.addState(this.kbbView);
 	}
 	
 }
