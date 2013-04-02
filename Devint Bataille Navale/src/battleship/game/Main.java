@@ -1,7 +1,5 @@
 package battleship.game;
 
-import java.awt.HeadlessException;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -14,8 +12,9 @@ public class Main {
 	 * Point d'entrée du programme
 	 * 
 	 * @param args
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		AppGameContainer container = null;
 		
