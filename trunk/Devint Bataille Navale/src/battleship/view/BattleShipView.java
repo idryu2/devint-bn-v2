@@ -39,7 +39,7 @@ public abstract class BattleShipView extends BasicGameState {
 	// Hameçon vers la classe principale
 	protected Game hook;
 
-	protected BattleShipView(String title, int h , int w, Game g) 
+	protected BattleShipView(int h, int w , Game g) 
 	{
 		super();
 		

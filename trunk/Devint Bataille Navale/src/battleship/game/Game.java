@@ -1,7 +1,5 @@
 package battleship.game;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.LinkedList;
 
 import org.newdawn.slick.*;
@@ -12,7 +10,6 @@ import battleship.config.Config;
 import battleship.models.boats.Boat;
 import battleship.models.boats.ThreeSlotsBoat;
 import battleship.services.sounds.*;
-import battleship.view.BattleShipView;
 import battleship.view.Case;
 import battleship.view.KeyboardBattle;
 import battleship.view.KeyboardPlacement;
@@ -33,6 +30,8 @@ public class Game extends StateBasedGame {
 	private KeyboardBattle kbbView;
 	private KeyboardPlacement kbpView;
 	
+	private boolean isSoundEnabled;
+	
 	public Game()
 	{
 		super(Config.WINDOW_TITLE);
@@ -47,7 +46,7 @@ public class Game extends StateBasedGame {
 		this.kbpView = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 		this.kbbView = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 		
-		//this.startBoatSelection();
+		this.isSoundEnabled = false;
 	}
 
 	public Level getDifficulty() 
@@ -70,15 +69,12 @@ public class Game extends StateBasedGame {
 		return soundPlayer;
 	}
 	
-	/**
-	 * Launch the boat selection view
-	 * 
-	 */
-	public void startBoatSelection() 
+	public boolean isSoundEnabled()
 	{
-		this.enterState(this.kbpView.getID());
+		return this.isSoundEnabled;
 	}
 
+	@SuppressWarnings("static-access")
 	public void checkPlacement(LinkedList<LinkedList<Case>> finalBoats) 
 	{
 		if (finalBoats.size() != Config.NB_BOATS_TO_PLACE)
@@ -95,10 +91,6 @@ public class Game extends StateBasedGame {
 			if (b != null)
 				this.realPlayerContext.getBoats().add(b);
 		}
-		
-		// change view
-		//
-		this.enterState(this.kbbView.getID());
 		
 		// add the boats to the ai player (debug)
 		//
@@ -117,6 +109,17 @@ public class Game extends StateBasedGame {
 		this.aiplayer.getContext().getBoats().add(b1);
 		this.aiplayer.getContext().getBoats().add(b2);
 		this.aiplayer.getContext().getBoats().add(b3);
+		
+		try {
+			Thread.currentThread().sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// change view
+		//
+		this.enterState(this.kbbView.getID());
 	}
 
 	@Override
