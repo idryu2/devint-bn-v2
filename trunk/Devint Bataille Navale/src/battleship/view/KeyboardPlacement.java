@@ -169,6 +169,7 @@ public class KeyboardPlacement extends BattleShipView {
 			maCase.getValue().setColor(Color.white);
 			if(input.isKeyDown(maCase.getKey()))
 			{
+				this.hook.getSoundPlayer().playSound(maCase.getValue().getSound());
 				if (!tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
 				{
 					if (tmpBoat.size() >= 3)

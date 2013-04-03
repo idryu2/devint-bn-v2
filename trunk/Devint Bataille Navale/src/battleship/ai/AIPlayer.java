@@ -27,22 +27,29 @@ public class AIPlayer implements IPlayer {
 	@Override
 	public Case play(HashMap<Integer, Case> listCases, LinkedList<Case> casesShooted) {
 		
-		Random r =  new Random();
-		int stop = r.nextInt(listCases.size());
+		Random r = new Random();;
+		int stop;
 		int i = 0;
+		Case chosenCase = null;
 		
-		for (Entry<Integer, Case> entry : listCases.entrySet())
+		while (chosenCase == null)
 		{
-			if (casesShooted.contains(entry.getValue()))
-				continue;
+			stop = r.nextInt(listCases.size());
+			i = 0;
 			
-			if (i >= stop)
-				return entry.getValue();
-			
-			i++;
+			for (Entry<Integer, Case> entry : listCases.entrySet())
+			{
+				if (casesShooted.contains(entry.getValue()))
+					continue;
+				
+				if (i >= stop)
+					chosenCase = entry.getValue();
+				
+				i++;
+			}
 		}
-		
-		return null;
+
+		return chosenCase;
 	}
 
 	public PlayerContext getContext() {
