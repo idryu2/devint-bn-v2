@@ -1,5 +1,6 @@
 package battleship.game;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.newdawn.slick.*;
@@ -50,11 +51,15 @@ public class Game extends StateBasedGame {
 		this.aiplayer = new AIPlayer();
 		this.realPlayerContext = new PlayerContext();
 		this.soundPlayer = new SoundPlayer();
-
+		Phrase.SOUND_PLAYER = this.soundPlayer;
+		
 		this.kbpView = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 		this.kbbView = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 
-		this.isSoundEnabled = false;
+		this.isSoundEnabled = true;
+		
+		//Config.PHRASES_DICTIONARY.get(PhraseType.PH2).play(Arrays.asList(SoundType.N3));
+		//Config.PHRASES_DICTIONARY.get(PhraseType.PH10).play(null, Arrays.asList(new Case(0, 0, 0, 0, "A", SoundType.A), new Case(0, 0, 0, 0, "B", SoundType.B), new Case(0, 0, 0, 0, "C", SoundType.C)));
 	}
 
 	public Level getDifficulty() 

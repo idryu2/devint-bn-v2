@@ -3,20 +3,19 @@ package battleship.services.sounds;
 import java.util.List;
 
 import battleship.config.Config;
+import battleship.view.Case;
 
 public class Phrase {
 	
 	private PhraseType id;
 	private List<SoundType> sounds;
-	private boolean isPlaying;
-	private SoundPlayer player;
 	
-	public Phrase(PhraseType id, List<SoundType> list, SoundPlayer sp)
+	public static SoundPlayer SOUND_PLAYER;
+	
+	public Phrase(PhraseType id, List<SoundType> list)
 	{
 		this.id = id;
 		this.sounds = list;
-		this.isPlaying = false;
-		this.player = sp;
 	}
 	
 	public PhraseType getId()
@@ -24,32 +23,48 @@ public class Phrase {
 		return this.id;
 	}
 	
-	public boolean isPlaying()
-	{
-		return this.isPlaying;
-	}
-	
 	public void play(List<SoundType> dynamicSounds)
 	{
+		if (SOUND_PLAYER == null)
+			return;
+		
 		int i = 0;
-		this.isPlaying = true;
 		
 		for (SoundType st : sounds)
-		{
-			while (this.player.isSoundPlaying())
-			{
-				System.out.println("Waiting the previous sound to stop...");
-			}
-			
+		{			
 			if (Config.SOUNDS_PATHS_DICTIONARY.get(st) == null)
 			{
-				this.player.playSound(dynamicSounds.get(i));
+				SOUND_PLAYER.playVoice(dynamicSounds.get(i));
 				i++;
 			}
 			else
-				this.player.playSound(st);
+				SOUND_PLAYER.playVoice(st);
 		}
 		
-		this.isPlaying = false;
+	}
+	
+	public void play(List<SoundType> dynamicSounds, List<Case> boat)
+	{
+		if (SOUND_PLAYER == null)
+			return;
+		
+		int i = 0;
+		
+		for (SoundType st : sounds)
+		{			
+			if (st.equals(SoundType.GENERIC_BOAT))
+			{
+				for (Case c : boat)
+				{
+					System.out.println("Playing " + c.getName());
+					SOUND_PLAYER.playVoice(c.getSound());
+				}
+			}
+			else if (Config.SOUNDS_PATHS_DICTIONARY.get(st) != null)
+			{
+				SOUND_PLAYER.playVoice(st);
+				i++;
+			}
+		}
 	}
 }

@@ -9,11 +9,15 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
+import battleship.config.Config;
 import battleship.game.Game;
+import battleship.services.sounds.PhraseType;
 import battleship.services.sounds.SoundType;
 
 
 public class KeyboardPlacement extends BattleShipView {
+	
+	private boolean isFirstLaunch;
 	
 	// Liste des 3 cases formant le bateau courant
 	private LinkedList<Case> tmpBoat;
@@ -29,6 +33,7 @@ public class KeyboardPlacement extends BattleShipView {
 		
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
+		this.isFirstLaunch = true;
 	}
 	
 	/**
@@ -162,6 +167,14 @@ public class KeyboardPlacement extends BattleShipView {
 	public void update(GameContainer container, StateBasedGame base, int delta) 
 	{
 		super.update(container, base, delta);
+		
+		if (this.isFirstLaunch)
+		{
+			this.hook.getSoundPlayer().playVoice(SoundType.P21);
+			Config.PHRASES_DICTIONARY.get(PhraseType.PH2).play(Arrays.asList(SoundType.N3));
+			this.isFirstLaunch = false;
+		}
+		
 		Input input = container.getInput();
 
 		for(Entry<Integer, Case> maCase : cases.entrySet())
@@ -169,7 +182,6 @@ public class KeyboardPlacement extends BattleShipView {
 			maCase.getValue().setColor(Color.white);
 			if(input.isKeyDown(maCase.getKey()))
 			{
-				this.hook.getSoundPlayer().playSound(maCase.getValue().getSound());
 				if (!tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
 				{
 					if (tmpBoat.size() >= 3)
