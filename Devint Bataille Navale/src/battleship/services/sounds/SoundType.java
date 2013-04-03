@@ -15,6 +15,7 @@ public enum SoundType {
 	GENERIC_NUMBER,
 	GENERIC_LETTER,
 	GENERIC_ALPHANUM,
+	GENERIC_BOAT,
 	
 	// Letters
 	A,
