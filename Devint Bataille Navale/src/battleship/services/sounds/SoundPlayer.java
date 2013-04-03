@@ -2,9 +2,10 @@ package battleship.services.sounds;
 
 import java.util.LinkedList;
 
-import battleship.config.Config;
-import org.newdawn.slick.*;
+import org.newdawn.slick.Sound;
 
+import battleship.config.Config;
+import battleship.game.Game;
 /**
  * SoundPlayer
  * Classe gérant les sons (exclusivement les bruitages pour le moment).
@@ -17,11 +18,13 @@ public class SoundPlayer {
 
 	private Sound currentSound;
 	private QueueManagerThread manager;
+	private Game hook;
 	
-	public SoundPlayer() 
+	public SoundPlayer(Game g) 
 	{
 		this.manager = new QueueManagerThread(this);
 		this.manager.start();
+		this.hook = g;
 	}
 
 	public void playSound(SoundType st)
@@ -53,6 +56,11 @@ public class SoundPlayer {
 		return this.currentSound.playing();
 	}
 	
+	public boolean isSoundAllowed()
+	{
+		return this.hook.isSoundEnabled();
+	}
+	
 	private class QueueManagerThread extends Thread
 	{
 		private LinkedList<SoundType> soundsToPlay;
@@ -82,10 +90,8 @@ public class SoundPlayer {
 					}
 				}
 				
-				while (this.hook.isSoundPlaying())
-				{
-					System.out.println("[Manager] En attente de la fin du son précédent...");
-					
+				while (this.hook.isSoundPlaying() || !this.hook.isSoundAllowed())
+				{					
 					try 
 					{
 						Thread.sleep(100);
@@ -136,9 +142,6 @@ public class SoundPlayer {
 			
 			if (soundPath == null)
 				return;
-			
-			if (this.hook.isSoundPlaying())
-				System.out.println("[Launcher] ERROR : The sound has been launched but another sound is already running");
 			
 			try 
 			{

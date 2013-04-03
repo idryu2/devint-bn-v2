@@ -50,7 +50,7 @@ public class Game extends StateBasedGame {
 
 		this.aiplayer = new AIPlayer();
 		this.realPlayerContext = new PlayerContext();
-		this.soundPlayer = new SoundPlayer();
+		this.soundPlayer = new SoundPlayer(this);
 		Phrase.SOUND_PLAYER = this.soundPlayer;
 		
 		this.kbpView = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
@@ -129,7 +129,9 @@ public class Game extends StateBasedGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		this.soundPlayer.playVoice(SoundType.P5);
+		
 		// change view
 		//
 		this.enterState(this.kbbView.getID());
@@ -140,6 +142,20 @@ public class Game extends StateBasedGame {
 	{
 		this.addState(this.kbpView);
 		this.addState(this.kbbView);
+	}
+
+	public void endBattle(boolean isPlayerWinner) 
+	{
+		if (isPlayerWinner)
+		{
+			this.soundPlayer.playSound(SoundType.P16);
+		}
+		else
+		{
+			this.soundPlayer.playSound(SoundType.P17);
+		}
+		
+		this.soundPlayer.playSound(SoundType.P18);
 	}
 
 }

@@ -204,7 +204,7 @@ public class KeyboardPlacement extends BattleShipView {
 					maCase.getValue().setColor(Color.red);
 		}
 		
-		if (input.isKeyDown(Input.KEY_ENTER))
+		if (input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
 		{
 			if(this.isBoatCorrect(this.tmpBoat))
 				this.finalBoats.addLast(this.tmpBoat);
