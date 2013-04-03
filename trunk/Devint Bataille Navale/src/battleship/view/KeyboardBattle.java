@@ -162,7 +162,8 @@ public class KeyboardBattle extends BattleShipView {
 				System.out.println("[Sound] Miss !");
 	}
 
-	private void boatSinked(){
+	private void boatSinked() 
+	{
 		ArrayList<Boat> boats ;
 		LinkedList<Case> cases;
 		if (isAIPlayerTurn)
@@ -193,6 +194,30 @@ public class KeyboardBattle extends BattleShipView {
 				b.setSinked(true);
 			}
 		}
+		
+		
+		// Verification des conditions de fin de partie
+		//
+		int sinkedBoats = 0;
+		for (Boat b : this.hook.getAiplayer().getContext().getBoats())
+			if (b.isSinked())
+				sinkedBoats++;
+			else
+				break;
+		
+		if (sinkedBoats == this.hook.getAiplayer().getContext().getBoats().size())
+			this.hook.endBattle(true);
+			
+		sinkedBoats = 0;
+		
+		for (Boat b : this.hook.getRealPlayerContext().getBoats())
+			if (b.isSinked())
+				sinkedBoats++;
+			else
+				break;
+		
+		if (sinkedBoats == this.hook.getRealPlayerContext().getBoats().size())
+			this.hook.endBattle(true);
 	}
 	
 	private void setColorsBoatSinked()
