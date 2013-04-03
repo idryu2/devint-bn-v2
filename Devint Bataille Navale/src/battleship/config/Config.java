@@ -32,6 +32,10 @@ public class Config {
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.EXPLOSION, "resources/sounds/explosion.wav");
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.MISS, "resources/sounds/plouf.wav");
 		
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.TRY_MISS, "resources/sounds/missed.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.TRY_NEVER, "resources/sounds/neverTouched.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.TRY_TOUCH, "resources/sounds/touched.wav");
+		
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.GENERIC_LETTER, null);
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.GENERIC_NUMBER, null);
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.GENERIC_ALPHANUM, null);
