@@ -32,4 +32,16 @@ public abstract class Boat {
 		return cases;
 	}
 	
+	@Override
+	public String toString()
+	{
+		String s = "Bateau (";
+		
+		for (Case c : this.cases)
+			s += c.toString() + " ";
+		
+		s += ")";
+		return s;
+	}
+	
 }
