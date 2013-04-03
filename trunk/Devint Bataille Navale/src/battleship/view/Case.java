@@ -55,5 +55,10 @@ public class Case extends Rectangle {
 					
 	}
 	
+	@Override
+	public String toString(){
+		return name;
+	}
+	
 
 }
