@@ -11,6 +11,11 @@ public enum SoundType {
 	EXPLOSION,
 	MISS,
 	
+	// Tries
+	TRY_NEVER,
+	TRY_MISS,
+	TRY_TOUCH,
+	
 	// Any specified type
 	GENERIC_NUMBER,
 	GENERIC_LETTER,

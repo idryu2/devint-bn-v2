@@ -19,6 +19,7 @@ public class KeyboardBattle extends BattleShipView {
 	private Case caseAttacked;
 	private LinkedList<Case> playerListCaseShooted;
 	private LinkedList<Case> aiListCaseShooted;
+	private Case actualCase;
 
 	public KeyboardBattle(int h ,int w, Game g) 
 	{
@@ -29,6 +30,8 @@ public class KeyboardBattle extends BattleShipView {
 		aiListCaseShooted = new LinkedList<>();
 
 		isAIPlayerTurn = false;
+		
+		actualCase = null;
 	}
 
 
@@ -70,13 +73,47 @@ public class KeyboardBattle extends BattleShipView {
 
 		// Choix du joueur
 		Input input = container.getInput();
+		boolean isSongPlayed = true;
+			
 		for (Entry<Integer, Case> maCase : cases.entrySet())
 		{
+
 			// Attaque du joueur
 			maCase.getValue().setColor(Color.white);
 			if (!this.isAIPlayerTurn && input.isKeyDown(maCase.getKey()))
 			{
+				
 				this.caseAttacked = maCase.getValue();
+				
+				if( !caseAttacked.equals(actualCase))
+				{
+					isSongPlayed = false;
+					actualCase = caseAttacked;
+				}
+				int tries = 0;
+				for (Case c : playerListCaseShooted)
+				{
+					if(caseAttacked.equals(c)){
+						if(c.getColor().equals(Color.red))
+							tries = 2;
+						else
+							tries = 1;
+					}
+				}
+				if(tries == -1)
+					System.out.println("Error Tries");
+				if(tries == 0 && !isSongPlayed){
+					this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+					isSongPlayed = !isSongPlayed;
+				}
+				if(tries == 1 && !isSongPlayed){
+					this.hook.getSoundPlayer().playSound(SoundType.TRY_MISS);
+					isSongPlayed = !isSongPlayed;
+				}
+				if(tries == 2 && !isSongPlayed){
+					this.hook.getSoundPlayer().playSound(SoundType.TRY_TOUCH);
+					isSongPlayed = !isSongPlayed;
+				}
 			}
 
 			// Preparation de l'affichage
@@ -109,7 +146,7 @@ public class KeyboardBattle extends BattleShipView {
 			// TODO;
 		}
 	}
-	
+
 	private void setColors(GameContainer container,Case case1) {
 		if (!this.isAIPlayerTurn && this.playerListCaseShooted.contains(case1))
 		{
@@ -127,7 +164,7 @@ public class KeyboardBattle extends BattleShipView {
 		}
 		if(true);
 	}
-	
+
 	private boolean checkTry() {
 		if (isAIPlayerTurn)
 		{
@@ -194,8 +231,8 @@ public class KeyboardBattle extends BattleShipView {
 				b.setSinked(true);
 			}
 		}
-		
-		
+
+
 		// Verification des conditions de fin de partie
 		//
 		int sinkedBoats = 0;
@@ -204,22 +241,22 @@ public class KeyboardBattle extends BattleShipView {
 				sinkedBoats++;
 			else
 				break;
-		
+
 		if (sinkedBoats == this.hook.getAiplayer().getContext().getBoats().size())
 			this.hook.endBattle(true);
-			
+
 		sinkedBoats = 0;
-		
+
 		for (Boat b : this.hook.getRealPlayerContext().getBoats())
 			if (b.isSinked())
 				sinkedBoats++;
 			else
 				break;
-		
+
 		if (sinkedBoats == this.hook.getRealPlayerContext().getBoats().size())
 			this.hook.endBattle(true);
 	}
-	
+
 	private void setColorsBoatSinked()
 	{
 		for(Boat b : this.hook.getRealPlayerContext().getBoats())
