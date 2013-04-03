@@ -1,7 +1,9 @@
 package battleship.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.newdawn.slick.Color;
@@ -10,8 +12,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
+import battleship.config.Config;
 import battleship.game.Game;
 import battleship.models.boats.Boat;
+import battleship.services.sounds.PhraseType;
 import battleship.services.sounds.SoundType;
 
 public class KeyboardBattle extends BattleShipView {
@@ -20,7 +24,8 @@ public class KeyboardBattle extends BattleShipView {
 	private LinkedList<Case> playerListCaseShooted;
 	private LinkedList<Case> aiListCaseShooted;
 	private Case actualCase;
-
+	private boolean isGameOver;
+	
 	public KeyboardBattle(int h ,int w, Game g) 
 	{
 		super(h, w, g);
@@ -32,6 +37,7 @@ public class KeyboardBattle extends BattleShipView {
 		isAIPlayerTurn = false;
 		
 		actualCase = null;
+		this.isGameOver = false;
 	}
 
 
@@ -57,18 +63,26 @@ public class KeyboardBattle extends BattleShipView {
 	public void update(GameContainer container, StateBasedGame base, int arg2) {
 		super.update(container, base, arg2);
 
+		if (isGameOver)
+			return;
+		
 		// Choix de l'IA
 		if (isAIPlayerTurn && this.caseAttacked == null)
 		{
 			this.caseAttacked = this.hook.getAiplayer().play(this.cases, this.aiListCaseShooted);
 
-			if (this.caseAttacked == null){
+			if (this.caseAttacked == null)
+			{
 				System.out.println("The AI player has chosen to skip his turn");
 				this.changeTurn(container);
 				return;
 			}
 			else
+			{
 				System.out.println("The AI player has chosen to fire in " + this.caseAttacked.getName());
+				Config.PHRASES_DICTIONARY.get(PhraseType.PH3).play(Arrays.asList(this.caseAttacked.getSound()));
+			}
+				
 		}
 
 		// Choix du joueur
@@ -129,9 +143,8 @@ public class KeyboardBattle extends BattleShipView {
 		{
 			boolean endOfTurn = checkTry();
 			playSounds();
-			boatSinked();
-			setColorsBoatSinked();
-			if (endOfTurn)
+			
+			if (endOfTurn && !boatSinked())
 				this.changeTurn(container);
 
 			try {
@@ -162,7 +175,8 @@ public class KeyboardBattle extends BattleShipView {
 			else
 				case1.setColor(container.getGraphics().getBackground());
 		}
-		if(true);
+		
+		setColorsBoatSinked();
 	}
 
 	private boolean checkTry() {
@@ -199,39 +213,41 @@ public class KeyboardBattle extends BattleShipView {
 				System.out.println("[Sound] Miss !");
 	}
 
-	private void boatSinked() 
+	private boolean boatSinked() 
 	{
 		ArrayList<Boat> boats ;
 		LinkedList<Case> cases;
-		if (isAIPlayerTurn)
-		{
-			boats = this.hook.getAiplayer().getContext().getBoats();
-			cases = this.aiListCaseShooted;
-		}
-		else
-		{
-			boats = this.hook.getRealPlayerContext().getBoats();
-			cases = this.playerListCaseShooted;
-		}
 
-		for(Boat b : boats)
+		for (int i = 0; i <= 1; i++) 
 		{
-			int nbCaseTouched = 0;
-			for(Case c : cases)
+			if (i == 0)
 			{
-				for (int i=0; i<b.getCases().length ; i++)
+				boats = this.hook.getAiplayer().getContext().getBoats();
+				cases = this.playerListCaseShooted;
+			}
+			else
+			{
+				boats = this.hook.getRealPlayerContext().getBoats();
+				cases = this.aiListCaseShooted;
+			}
+			
+			for (Boat b : boats)
+			{
+				int nbCaseTouched = 0;
+				for (Case c1 : cases)
 				{
-					if (c.equals(b.getCases()[i]))
-						nbCaseTouched++;
+					for (Case c2 : b.getCases())
+					{
+						if (c1.equals(c2))
+							nbCaseTouched++;
+					}
 				}
+	
+				if (nbCaseTouched == b.getCases().length)
+					b.setSinked(true);
 			}
-			System.out.println("IA Player = "+isAIPlayerTurn+" nb case touched = "+nbCaseTouched+" nb case boat ="+b.getCases().length+", taille de la liste de bateaux ="+boats.size());
-			if (nbCaseTouched == b.getCases().length-1)
-			{
-				b.setSinked(true);
-			}
+			
 		}
-
 
 		// Verification des conditions de fin de partie
 		//
@@ -243,8 +259,14 @@ public class KeyboardBattle extends BattleShipView {
 				break;
 
 		if (sinkedBoats == this.hook.getAiplayer().getContext().getBoats().size())
+		{
 			this.hook.endBattle(true);
-
+			this.setColorsBoatSinked();
+			this.isGameOver = true;
+			return true;
+		}
+			
+		
 		sinkedBoats = 0;
 
 		for (Boat b : this.hook.getRealPlayerContext().getBoats())
@@ -254,12 +276,23 @@ public class KeyboardBattle extends BattleShipView {
 				break;
 
 		if (sinkedBoats == this.hook.getRealPlayerContext().getBoats().size())
+		{
 			this.hook.endBattle(true);
+			this.setColorsBoatSinked();
+			this.isGameOver = true;
+			return true;
+		}
+		
+		return false;
+			
 	}
 
 	private void setColorsBoatSinked()
 	{
-		for(Boat b : this.hook.getRealPlayerContext().getBoats())
+		List<Boat> boats = (isAIPlayerTurn) ? this.hook.getRealPlayerContext().getBoats() : 
+			this.hook.getAiplayer().getContext().getBoats();
+		
+		for(Boat b : boats)
 		{
 			if(b.isSinked())
 			{
