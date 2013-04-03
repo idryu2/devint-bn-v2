@@ -6,8 +6,12 @@ import java.io.*;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
+
 //import t2s.SIVOXDevint;
 
+import battleship.config.Config;
 import battleship.game.Game;
 import battleship.menu.BaseMenu;
 
@@ -111,15 +115,111 @@ public class MenuDifficulte extends BaseMenu {
 		
 		if(i ==0) 
 		{
-	        new Game();
+			AppGameContainer container = null;
+			
+			Game g = new Game();
+			
+			try 
+			{
+				container = new AppGameContainer(g);
+				//g.initStatesList(container);
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+				return;
+			}
+			
+			try 
+			{
+				container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			
+			try 
+			{
+				container.setShowFPS(false);
+				container.start();
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 		else if(i == 1)
 		{
-			new Game();
+			AppGameContainer container = null;
+			
+			Game g = new Game();
+			
+			try 
+			{
+				container = new AppGameContainer(g);
+				//g.initStatesList(container);
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+				return;
+			}
+			
+			try 
+			{
+				container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			
+			try 
+			{
+				container.setShowFPS(false);
+				container.start();
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 		else if(i==2)
 		{
-			new Game();
+			AppGameContainer container = null;
+			
+			Game g = new Game();
+			
+			try 
+			{
+				container = new AppGameContainer(g);
+				//g.initStatesList(container);
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+				return;
+			}
+			
+			try 
+			{
+				container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			
+			try 
+			{
+				container.setShowFPS(false);
+				container.start();
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 			
 	
