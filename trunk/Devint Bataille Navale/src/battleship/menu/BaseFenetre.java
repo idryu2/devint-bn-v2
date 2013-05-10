@@ -1,7 +1,6 @@
 package battleship.menu;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -12,6 +11,7 @@ import javax.swing.WindowConstants;
  * @author Alexandra Muge
  *
  */
+@SuppressWarnings("serial")
 public abstract class BaseFenetre extends JFrame {
 
     /**

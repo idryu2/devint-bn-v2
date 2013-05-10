@@ -44,4 +44,24 @@ public abstract class Boat {
 		return s;
 	}
 	
+	@Override
+	public boolean equals(Object o)
+	{
+		if (!(o instanceof Boat))
+			return false;
+		
+		for (Case c1 : ((Boat)o).cases)
+		{
+			boolean found = false;
+			
+			for (Case c2 : this.cases)
+				if (c2.equals(c1))
+					found = true;
+			
+			if (!found)
+				return false;
+		}
+			
+		return true;	
+	}
 }

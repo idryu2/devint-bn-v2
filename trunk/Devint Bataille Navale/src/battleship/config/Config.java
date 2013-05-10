@@ -123,7 +123,7 @@ public class Config {
 	
 	// -- UI
 	//
-	public static final int WINDOW_WIDTH = 500;//java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
-	public static final int WINDOW_HEIGHT = 500;//java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+	public static final int WINDOW_WIDTH = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+	public static final int WINDOW_HEIGHT = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
 	public static final String WINDOW_TITLE = "Bataille navale";
 }
