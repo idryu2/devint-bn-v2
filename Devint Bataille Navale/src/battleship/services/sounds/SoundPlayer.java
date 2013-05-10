@@ -29,7 +29,7 @@ public class SoundPlayer {
 
 	public void playSound(SoundType st)
 	{
-		this.playVoice(st);
+		this.manager.playSoundImmediately(st);
 	}
 	
 	public void playVoice(SoundType st)
@@ -108,7 +108,7 @@ public class SoundPlayer {
 				
 				try 
 				{
-					Thread.sleep(200);
+					Thread.sleep(300);
 				} 
 				catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -119,6 +119,14 @@ public class SoundPlayer {
 		
 		public void addSoundToPlay(SoundType st)
 		{
+			this.soundsToPlay.addLast(st);
+		}
+		
+		public void playSoundImmediately(SoundType st)
+		{
+			if (this.hook.currentSound != null)
+				this.hook.currentSound.stop();
+			this.soundsToPlay.clear();
 			this.soundsToPlay.addLast(st);
 		}
 		

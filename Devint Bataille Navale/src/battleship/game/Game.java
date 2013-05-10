@@ -60,6 +60,8 @@ public class Game extends StateBasedGame {
 		
 		//Config.PHRASES_DICTIONARY.get(PhraseType.PH2).play(Arrays.asList(SoundType.N3));
 		//Config.PHRASES_DICTIONARY.get(PhraseType.PH10).play(null, Arrays.asList(new Case(0, 0, 0, 0, "A", SoundType.A), new Case(0, 0, 0, 0, "B", SoundType.B), new Case(0, 0, 0, 0, "C", SoundType.C)));
+		
+		this.prepareBattle();
 	}
 
 	public Level getDifficulty() 
@@ -87,7 +89,6 @@ public class Game extends StateBasedGame {
 		return this.isSoundEnabled;
 	}
 
-	@SuppressWarnings("static-access")
 	public void checkPlacement(LinkedList<LinkedList<Case>> finalBoats) 
 	{
 		if (finalBoats.size() != Config.NB_BOATS_TO_PLACE)
@@ -105,6 +106,12 @@ public class Game extends StateBasedGame {
 				this.realPlayerContext.getBoats().add(b);
 		}
 
+		this.prepareBattle();
+	}
+
+	@SuppressWarnings("static-access")
+	private void prepareBattle()
+	{
 		// add the boats to the ai player (debug)
 		//
 		Boat b1 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_B),
@@ -123,24 +130,24 @@ public class Game extends StateBasedGame {
 		this.aiplayer.getContext().getBoats().add(b2);
 		this.aiplayer.getContext().getBoats().add(b3);
 
-		try {
+		/*try {
 			Thread.currentThread().sleep(100);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		this.soundPlayer.playVoice(SoundType.P5);
 		
 		// change view
 		//
-		this.enterState(this.kbbView.getID());
+		//this.enterState(this.kbbView.getID());
 	}
-
+	
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException 
 	{
-		this.addState(this.kbpView);
+		//this.addState(this.kbpView);
 		this.addState(this.kbbView);
 	}
 
@@ -148,14 +155,14 @@ public class Game extends StateBasedGame {
 	{
 		if (isPlayerWinner)
 		{
-			this.soundPlayer.playSound(SoundType.P16);
+			this.soundPlayer.playVoice(SoundType.P16);
 		}
 		else
 		{
-			this.soundPlayer.playSound(SoundType.P17);
+			this.soundPlayer.playVoice(SoundType.P17);
 		}
 		
-		this.soundPlayer.playSound(SoundType.P18);
+		this.soundPlayer.playVoice(SoundType.P18);
 	}
 
 }

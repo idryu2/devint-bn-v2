@@ -33,8 +33,8 @@ public class KeyboardPlacement extends BattleShipView {
 		
 		this.tmpBoat = new LinkedList<>();
 		this.finalBoats = new LinkedList<>();
-		//this.isFirstLaunch = true;
-		this.isFirstLaunch = false;
+		this.isFirstLaunch = true;
+		//this.isFirstLaunch = false;
 	}
 	
 	/**

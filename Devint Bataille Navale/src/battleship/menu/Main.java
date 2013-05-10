@@ -18,32 +18,18 @@
 */
 package battleship.menu;
 
-import java.io.File;
+import java.awt.Frame;
 
-//import t2s.SIVOXDevint;
-
-/** classe pour lancer le jeu
- * Elle cr   simplement une instance de MenuJeu
- * 
- * @author helene
- *
- */
 public class Main{
 
-    public static void main(String args[]){
+    public static void main(String args[])
+    {
         Fenetre fe = new Fenetre("Bataille Navale");
         
-        
-        /*
-         * Demande à l'utilisateur son nom
-         * Charge les niveaux finis ainsi que l'avancée de l'utilisateur dans le jeu
-         */
-        String[] nomOptions = {"Lancer la partie", "Quitter"}; 
+        String[] nomOptions = { "Lancer la partie", "Lancer le tutoriel", "Quitter" }; 
         Menu m = new Menu("Bataille Navale", nomOptions);
         fe.add(m);
-        fe.setExtendedState(fe.MAXIMIZED_BOTH);
+        fe.setExtendedState(Frame.MAXIMIZED_BOTH);
         m.requestFocus();
-        //fe.getContentPane().add(pan);
-
     }
 }

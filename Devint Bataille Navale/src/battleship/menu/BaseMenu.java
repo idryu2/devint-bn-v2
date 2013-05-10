@@ -17,11 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
-//import t2s.SIVOXDevint;
-
+@SuppressWarnings("serial")
 public class BaseMenu extends BasePanel implements KeyListener, ActionListener {
     /**
      * Nom du jeu
