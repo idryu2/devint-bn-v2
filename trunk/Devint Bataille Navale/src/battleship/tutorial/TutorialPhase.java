@@ -11,5 +11,8 @@ public enum TutorialPhase {
 	// Maintenant, viser case verte (P23) + affichage case verte
 	P3,
 	
+	// Bravo ! + Les bateaux ennemi ...
+	P4,
+	
 	
 }
