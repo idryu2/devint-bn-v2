@@ -212,7 +212,7 @@ public class KeyboardPlacement extends BattleShipView {
 				
 			this.tmpBoat = new LinkedList<>();
 			
-			this.hook.checkPlacement(this.finalBoats);
+			//this.hook.checkPlacement(this.finalBoats);
 		}
 		
 		if (input.isKeyDown(Input.KEY_BACK))

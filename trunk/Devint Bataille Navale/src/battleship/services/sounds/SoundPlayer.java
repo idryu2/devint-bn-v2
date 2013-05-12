@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import org.newdawn.slick.Sound;
 
 import battleship.config.Config;
-import battleship.game.Game;
+import battleship.game.IGame;
 /**
  * SoundPlayer
  * Classe gérant les sons (exclusivement les bruitages pour le moment).
@@ -18,9 +18,9 @@ public class SoundPlayer {
 
 	private Sound currentSound;
 	private QueueManagerThread manager;
-	private Game hook;
+	private IGame hook;
 	
-	public SoundPlayer(Game g) 
+	public SoundPlayer(IGame g) 
 	{
 		this.manager = new QueueManagerThread(this);
 		this.manager.start();

@@ -99,6 +99,16 @@ public class Config {
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.P19, "resources/sounds/voice/phrases/19.wav");
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.P20, "resources/sounds/voice/phrases/20.wav");
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.P21, "resources/sounds/voice/phrases/21.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P22, "resources/sounds/voice/phrases/22.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P23, "resources/sounds/voice/phrases/23.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P24, "resources/sounds/voice/phrases/24.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P25, "resources/sounds/voice/phrases/25.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P26, "resources/sounds/voice/phrases/26.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P27, "resources/sounds/voice/phrases/27.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P28, "resources/sounds/voice/phrases/28.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P29, "resources/sounds/voice/phrases/29.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P30, "resources/sounds/voice/phrases/30.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P31, "resources/sounds/voice/phrases/31.wav");
 	}
 	
 	public static HashMap<PhraseType, Phrase> PHRASES_DICTIONARY = new HashMap<>();
