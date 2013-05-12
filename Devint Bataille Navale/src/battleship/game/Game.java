@@ -28,7 +28,7 @@ public class Game extends StateBasedGame {
 	private SoundPlayer soundPlayer;
 	private KeyboardBattle kbbView;
 
-	private boolean isSoundEnabled;
+	protected boolean isSoundEnabled;
 
 	public Game()
 	{
