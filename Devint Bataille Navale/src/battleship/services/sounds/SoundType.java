@@ -83,5 +83,15 @@ public enum SoundType {
 	P18,
 	P19,
 	P20,
-	P21
+	P21,
+	P22,
+	P23,
+	P24,
+	P25,
+	P26,
+	P27,
+	P28,
+	P29,
+	P30,
+	P31
 }

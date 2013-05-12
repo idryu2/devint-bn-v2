@@ -20,7 +20,7 @@ import battleship.view.KeyboardBattle;
  * @author Baptiste Viale
  *
  */
-public class Game extends StateBasedGame {
+public class Game extends StateBasedGame implements IGame {
 
 	private Level difficulty;
 	private AIPlayer aiplayer;

@@ -1,6 +1,5 @@
 package battleship.view;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
@@ -10,22 +9,24 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
-import battleship.config.Config;
-import battleship.game.Game;
-import battleship.services.sounds.PhraseType;
 import battleship.services.sounds.SoundType;
+import battleship.tutorial.TutorialGame;
+import battleship.tutorial.TutorialPhase;
 
 public class KeyBoardTutorial extends BattleShipView {
-
-	private boolean isFirstLaunch;
-	private LinkedList<Case> tmpBoat;
-	private LinkedList<LinkedList<Case>> finalBoats;
-
-	public KeyBoardTutorial(int h, int w, Game g) {
+	
+	private TutorialPhase currentPhase;
+	private boolean soundLaunched;
+	
+	private Case greenCase;
+	
+	public KeyBoardTutorial(int h, int w, TutorialGame g) {
 		super(h, w, g);
-		this.tmpBoat = new LinkedList<>();
-		this.finalBoats = new LinkedList<>();
-		this.isFirstLaunch = true;
+	
+		this.currentPhase = TutorialPhase.P1;
+		this.soundLaunched = false;
+		
+		this.greenCase = this.cases.get(Input.KEY_G);
 	}
 
 	/**
@@ -37,19 +38,7 @@ public class KeyBoardTutorial extends BattleShipView {
 	{
 		container.getGraphics().setBackground(org.newdawn.slick.Color.blue );
 	}
-	/**
-	 * Détermine si une case fait partie des bateaux finaux
-	 * 
-	 * @param c
-	 * @return
-	 */
-	private boolean isCaseInFinalBoats(Case c)
-	{
-		for (LinkedList<Case> lc : this.finalBoats)
-			if (lc.contains(c))
-				return true;
-		return false;
-	}
+
 	/**
 	 * Gère les updates de couleurs sur les composants
 	 * 
@@ -59,12 +48,60 @@ public class KeyBoardTutorial extends BattleShipView {
 	{
 		super.update(container, base, delta);
 		
-		if (this.isFirstLaunch)
+		switch(this.currentPhase) 
 		{
-			this.hook.getSoundPlayer().playVoice(SoundType.P21);
-			// TODO: phrase "bienvenue dans le tuto"
-			Config.PHRASES_DICTIONARY.get(PhraseType.PH2).play(Arrays.asList(SoundType.N3));
-			this.isFirstLaunch = false;
+		case P1 :
+			
+			// Jouer le son s'il n'a pas encore été lancé
+			if (!this.soundLaunched)
+			{
+				this.hook.getSoundPlayer().playVoice(SoundType.P21);
+				this.soundLaunched = true;
+			}
+			
+			// Passer à la phase suivante si le son est terminé
+			if (!this.hook.getSoundPlayer().isSoundPlaying())
+			{
+				this.soundLaunched = false;
+				this.currentPhase = TutorialPhase.P2;
+			}
+			
+			break;
+			
+		case P2:
+			
+			// Jouer le son s'il n'a pas encore été lancé
+			if (!this.soundLaunched)
+			{
+				this.hook.getSoundPlayer().playVoice(SoundType.P22);
+				this.soundLaunched = true;
+			}
+			
+			// Passer à la phase suivante si le son est terminé
+			if (!this.hook.getSoundPlayer().isSoundPlaying())
+			{
+				this.soundLaunched = false;
+				this.currentPhase = TutorialPhase.P3;
+			}
+			
+			break;
+			
+		case P3 :
+			
+			// Jouer le son s'il n'a pas encore été lancé
+			if (!this.soundLaunched)
+			{
+				this.hook.getSoundPlayer().playVoice(SoundType.P23);
+				this.soundLaunched = true;
+			}
+			
+			// Colorier la case
+			this.greenCase.setColor(Color.green);
+			
+			break;
+			
+			default :
+				break;
 		}
 		
 		Input input = container.getInput();
@@ -72,42 +109,8 @@ public class KeyBoardTutorial extends BattleShipView {
 		for(Entry<Integer, Case> maCase : cases.entrySet())
 		{
 			maCase.getValue().setColor(Color.white);
-			if(input.isKeyDown(maCase.getKey()))
-			{
-				if (!tmpBoat.contains(maCase.getValue()) && !isCaseInFinalBoats(maCase.getValue()))
-				{
-					if (tmpBoat.size() >= 3)
-						tmpBoat.removeFirst();
-
-					tmpBoat.addLast(maCase.getValue());
-				}
-
-				break;
-			}
-
-			if (tmpBoat.contains(maCase.getValue()))
-				if (true)
-					maCase.getValue().setColor(Color.orange);
-				else	
-					maCase.getValue().setColor(Color.green);
-
-			for (LinkedList<Case> lc : this.finalBoats)
-				if (lc.contains(maCase.getValue()))
-					maCase.getValue().setColor(Color.red);
 		}
 		
-		if (input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
-		{
-			if(true)
-				this.finalBoats.addLast(this.tmpBoat);
-				
-			this.tmpBoat = new LinkedList<>();
-			
-			this.hook.checkPlacement(this.finalBoats);
-		}
-		
-		if (input.isKeyDown(Input.KEY_BACK))
-			this.tmpBoat = new LinkedList<>();
 	}
 
 	/**

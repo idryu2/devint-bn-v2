@@ -10,7 +10,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import battleship.game.Game;
+import battleship.game.IGame;
 import battleship.services.sounds.SoundType;
 
 public abstract class BattleShipView extends BasicGameState {
@@ -39,9 +39,9 @@ public abstract class BattleShipView extends BasicGameState {
 	protected LinkedHashMap<String, Integer> matchKeys;
 
 	// Hameçon vers la classe principale
-	protected Game hook;
+	protected IGame hook;
 
-	protected BattleShipView(int h, int w , Game g) 
+	protected BattleShipView(int h, int w , IGame g) 
 	{
 		super();
 		
