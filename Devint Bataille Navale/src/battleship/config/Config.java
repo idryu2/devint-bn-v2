@@ -2,7 +2,6 @@ package battleship.config;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import battleship.services.sounds.*;
 
@@ -126,4 +125,5 @@ public class Config {
 	public static final int WINDOW_WIDTH = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
 	public static final int WINDOW_HEIGHT = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
 	public static final String WINDOW_TITLE = "Bataille navale";
+	public static final String TUTORIAL_WINDOW_TITLE = "Tutoriel - Bataille navale";
 }

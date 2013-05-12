@@ -3,7 +3,6 @@ package battleship.game;
 import java.util.ArrayList;
 
 import battleship.models.boats.Boat;
-import battleship.view.Case;
 
 
 /**

@@ -1,15 +1,9 @@
 package battleship.game;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.state.transition.Transition;
 
 import battleship.ai.AIPlayer;
 import battleship.config.Config;
@@ -18,7 +12,6 @@ import battleship.models.boats.ThreeSlotsBoat;
 import battleship.services.sounds.*;
 import battleship.view.Case;
 import battleship.view.KeyboardBattle;
-import battleship.view.KeyboardPlacement;
 
 /**
  * Game
@@ -34,10 +27,6 @@ public class Game extends StateBasedGame {
 	private PlayerContext realPlayerContext;
 	private SoundPlayer soundPlayer;
 	private KeyboardBattle kbbView;
-	private KeyboardPlacement kbpView;
-//	private FadeInTransition fit;
-//	private FadeOutTransition fot;
-
 
 	private boolean isSoundEnabled;
 
@@ -52,8 +41,7 @@ public class Game extends StateBasedGame {
 		this.realPlayerContext = new PlayerContext();
 		this.soundPlayer = new SoundPlayer(this);
 		Phrase.SOUND_PLAYER = this.soundPlayer;
-		
-		this.kbpView = new KeyboardPlacement(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
+
 		this.kbbView = new KeyboardBattle(Config.WINDOW_HEIGHT,Config.WINDOW_WIDTH, this);
 
 		this.isSoundEnabled = true;
@@ -109,7 +97,6 @@ public class Game extends StateBasedGame {
 		this.prepareBattle();
 	}
 
-	@SuppressWarnings("static-access")
 	private void prepareBattle()
 	{
 		// add the boats to the ai player (debug)
@@ -129,13 +116,6 @@ public class Game extends StateBasedGame {
 		this.aiplayer.getContext().getBoats().add(b1);
 		this.aiplayer.getContext().getBoats().add(b2);
 		this.aiplayer.getContext().getBoats().add(b3);
-
-		/*try {
-			Thread.currentThread().sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
 		this.soundPlayer.playVoice(SoundType.P5);
 		
@@ -147,7 +127,6 @@ public class Game extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException 
 	{
-		//this.addState(this.kbpView);
 		this.addState(this.kbbView);
 	}
 

@@ -1,4 +1,4 @@
-package battleship.game;
+package battleship.tutorial;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import battleship.config.Config;
 
 /**
- * Main du jeu (à recopier dans le code du menu)
+ * Main du tutoriel (à recopier dans le code du menu)
  * 
  * @author Baptiste
  *
@@ -23,11 +23,11 @@ public class Main {
 	{
 		AppGameContainer container = null;
 		
-		Game g = new Game();
+		TutorialGame tg = new TutorialGame();
 		
 		try 
 		{
-			container = new AppGameContainer(g);
+			container = new AppGameContainer(tg);
 			//g.initStatesList(container);
 		} 
 		catch (SlickException e) 
