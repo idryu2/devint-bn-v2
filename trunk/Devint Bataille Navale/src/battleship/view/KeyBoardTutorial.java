@@ -68,6 +68,7 @@ public class KeyBoardTutorial extends BattleShipView {
 		{
 			if (input.isKeyDown(maCase.getKey()))
 			{
+				nextStepKeyPressed = false;
 				{
 					if (this.caseAttacked == null)
 					{
