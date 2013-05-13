@@ -141,7 +141,7 @@ public class KeyBoardTutorial extends BattleShipView {
 		}
 		for(Entry<Integer, Case> maCase : cases.entrySet())
 		{
-			if(!maCase.getKey().equals(Input.KEY_G))
+			if(!(maCase.getKey().equals(Input.KEY_G)&& this.currentPhase.equals(TutorialPhase.P3)))
 			{
 				maCase.getValue().setColor(Color.white);
 				if(maCase.getValue().equals(this.caseAttacked))
