@@ -201,7 +201,6 @@ public class KeyboardBattle extends BattleShipView {
 			if (nbCaseTouched == b.getCases().length && !b.isSinked())
 			{
 				b.setSinked(true);
-
 				Config.PHRASES_DICTIONARY.get(PhraseType.PH5).play(null, Arrays.asList(b.getCases()));
 				
 			}	
