@@ -21,10 +21,12 @@ public class KeyBoardTutorial extends BattleShipView {
 	private Case greenCase;
 	private Case caseAttacked;
 
+	private Case lastCase;
+	
 	public KeyBoardTutorial(int h, int w, TutorialGame g) {
 		super(h, w, g);
 
-		this.currentPhase = TutorialPhase.P1;
+		this.currentPhase = TutorialPhase.P4;
 		this.soundLaunched = false;
 		this.nextStepKeyPressed = false;
 		this.greenCase = this.cases.get(Input.KEY_G);
@@ -53,12 +55,22 @@ public class KeyBoardTutorial extends BattleShipView {
 		for (Entry<Integer, Case> maCase : cases.entrySet())
 		{
 			if (input.isKeyDown(maCase.getKey()))
-			{
+			{				
+				if (this.caseAttacked == null)
+				{
+					if (!this.hook.getSoundPlayer().isSoundPlaying())
+						this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+				}
+				else
+				{
+					if (!this.hook.getSoundPlayer().isSoundPlaying() && !maCase.getValue().equals(this.caseAttacked))
+						this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+				}
+				
 				this.caseAttacked = maCase.getValue();
-				this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
 			}
-
 		}
+		
 		if (input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE) )
 		{
 			nextStepKeyPressed = true;
@@ -139,6 +151,7 @@ public class KeyBoardTutorial extends BattleShipView {
 		default :
 			break;
 		}
+		
 		for(Entry<Integer, Case> maCase : cases.entrySet())
 		{
 			if(!(maCase.getKey().equals(Input.KEY_G)&& this.currentPhase.equals(TutorialPhase.P3)))
