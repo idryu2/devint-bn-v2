@@ -20,8 +20,6 @@ public class KeyBoardTutorial extends BattleShipView {
 	private boolean nextStepKeyPressed;
 	private Case greenCase;
 	private Case caseAttacked;
-
-	private Case lastCase;
 	
 	public KeyBoardTutorial(int h, int w, TutorialGame g) {
 		super(h, w, g);
