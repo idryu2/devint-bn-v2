@@ -32,7 +32,7 @@ public class KeyBoardTutorial extends BattleShipView {
 	public KeyBoardTutorial(int h, int w, TutorialGame g) {
 		super(h, w, g);
 
-		this.currentPhase = TutorialPhase.P3;
+		this.currentPhase = TutorialPhase.P1;
 		this.soundLaunched = false;
 		this.nextStepKeyPressed = false;
 		this.caseAttacked = new Case(12, 12, 12, 12, "Départ", null);
@@ -76,8 +76,13 @@ public class KeyBoardTutorial extends BattleShipView {
 					}
 					else
 					{
-						if (!this.hook.getSoundPlayer().isSoundPlaying() && !maCase.getValue().equals(this.caseAttacked))
-							this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+						if (!this.hook.getSoundPlayer().isSoundPlaying() && !maCase.getValue().equals(this.caseAttacked)){
+							if(!playerListCaseShooted.contains(maCase.getValue()))
+								this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+							else
+								this.hook.getSoundPlayer().playSound(SoundType.TRY_TOUCH);
+						}
+
 					}
 				}
 				this.caseAttacked = maCase.getValue();
@@ -89,7 +94,7 @@ public class KeyBoardTutorial extends BattleShipView {
 		if (input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE) )
 		{
 			nextStepKeyPressed = true;
-			if(currentPhase.equals(TutorialPhase.P4)){
+			if(currentPhase.equals(TutorialPhase.P4) || this.currentPhase.equals(TutorialPhase.P5)){
 				if (!this.playerListCaseShooted.contains(caseAttacked))
 					this.playerListCaseShooted.add(caseAttacked);
 				playSounds();
@@ -134,6 +139,12 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.soundLaunched = false;
 				this.nextStepKeyPressed = false;
 				this.currentPhase = TutorialPhase.P3;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 			break;
@@ -154,7 +165,14 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.soundLaunched = false;
 				this.nextStepKeyPressed = false;
 				this.greenCase.setColor(Color.white);
+				//this.caseAttacked = new Case(12, 12, 12, 12, "Départ", null);
 				this.currentPhase = TutorialPhase.P4;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 
@@ -167,14 +185,63 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.hook.getSoundPlayer().playVoice(SoundType.P24);
 				this.soundLaunched = true;
 			}
-			else
+			else if (!this.hook.getSoundPlayer().isSoundPlaying())
 			{
-				//playSounds();
-				if(boatSinked())
+				if(boatTouched(caseAttacked) && nextStepKeyPressed)
 				{
-					this.hook.getSoundPlayer().playVoice(SoundType.P1);
+					this.soundLaunched = false;
+					this.nextStepKeyPressed = false;
+					currentPhase = TutorialPhase.P5;
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
+			break;
+		case P5 :
+			if (!this.soundLaunched)
+			{
+				this.hook.getSoundPlayer().playVoice(SoundType.P25);
+				this.soundLaunched = true;
+			}
+			else
+			{
+				if(boatSinked() && nextStepKeyPressed)
+				{
+					this.soundLaunched = false;
+					this.nextStepKeyPressed = false;
+					currentPhase = TutorialPhase.P6;
+				}
+			}
+			break;
+		case P6 :
+			if (!this.soundLaunched)
+			{
+				this.hook.getSoundPlayer().playVoice(SoundType.P26);
+				this.soundLaunched = true;
+			}
+			else
+			{
+				if(boatTouched(caseAttacked))
+				{
+					this.soundLaunched = false;
+					this.nextStepKeyPressed = false;
+					currentPhase = TutorialPhase.P7;
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			break;
+		case P7 :
+			if (!this.hook.getSoundPlayer().isSoundPlaying() && this.nextStepKeyPressed)
+				System.exit(0);
 			break;
 		default :
 			break;
@@ -187,14 +254,22 @@ public class KeyBoardTutorial extends BattleShipView {
 				if(maCase.getValue().equals(this.caseAttacked))
 					maCase.getValue().setColor(Color.orange);
 			}
-			if(this.currentPhase.equals(TutorialPhase.P4))
+			if(this.currentPhase.equals(TutorialPhase.P4) || this.currentPhase.equals(TutorialPhase.P5) || this.currentPhase.equals(TutorialPhase.P6) )
 			{
 				for(Case c : boat.getCases()){
-					if(boatTouched(c))
-						c.setColor(Color.green);
-					else
+					if(!c.equals(this.caseAttacked))
 						c.setColor(Color.red);
-
+					else
+						c.setColor(Color.orange);
+						
+				}
+				for(Case c : playerListCaseShooted){
+					if(boatTouched(c)){
+						if(!c.equals(this.caseAttacked))
+							c.setColor(Color.green);
+						else
+							c.setColor(Color.orange);
+					}		
 				}
 
 			}
@@ -253,12 +328,11 @@ public class KeyBoardTutorial extends BattleShipView {
 					nbCaseTouched++;
 			}
 		}
-
+		System.out.println("Nb case touched =" +nbCaseTouched);
 		// Bateau coulé
 		if (nbCaseTouched == boat.getCases().length && !boat.isSinked())
 		{
 			boat.setSinked(true);
-			Config.PHRASES_DICTIONARY.get(PhraseType.PH5).play(null, Arrays.asList(boat.getCases()));
 			return true;
 		}
 		return false;
