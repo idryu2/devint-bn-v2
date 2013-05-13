@@ -1,5 +1,7 @@
 package battleship.view;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
@@ -9,6 +11,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
+import battleship.config.Config;
+import battleship.models.boats.Boat;
+import battleship.models.boats.ThreeSlotsBoat;
+import battleship.services.sounds.PhraseType;
 import battleship.services.sounds.SoundType;
 import battleship.tutorial.TutorialGame;
 import battleship.tutorial.TutorialPhase;
@@ -20,14 +26,22 @@ public class KeyBoardTutorial extends BattleShipView {
 	private boolean nextStepKeyPressed;
 	private Case greenCase;
 	private Case caseAttacked;
-	
+	private Boat boat;
+	private LinkedList<Case> playerListCaseShooted;
+
 	public KeyBoardTutorial(int h, int w, TutorialGame g) {
 		super(h, w, g);
 
-		this.currentPhase = TutorialPhase.P4;
+		this.currentPhase = TutorialPhase.P3;
 		this.soundLaunched = false;
 		this.nextStepKeyPressed = false;
+		this.caseAttacked = new Case(12, 12, 12, 12, "Départ", null);
 		this.greenCase = this.cases.get(Input.KEY_G);
+		this.playerListCaseShooted = new LinkedList<>();
+		// construction du bateau
+		boat = new ThreeSlotsBoat().place(this.getCases().get(Input.KEY_F),
+				this.getCases().get(Input.KEY_G),
+				this.getCases().get(Input.KEY_H));
 	}
 
 	/**
@@ -53,25 +67,33 @@ public class KeyBoardTutorial extends BattleShipView {
 		for (Entry<Integer, Case> maCase : cases.entrySet())
 		{
 			if (input.isKeyDown(maCase.getKey()))
-			{				
-				if (this.caseAttacked == null)
+			{
 				{
-					if (!this.hook.getSoundPlayer().isSoundPlaying())
-						this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+					if (this.caseAttacked == null)
+					{
+						if (!this.hook.getSoundPlayer().isSoundPlaying())
+							this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+					}
+					else
+					{
+						if (!this.hook.getSoundPlayer().isSoundPlaying() && !maCase.getValue().equals(this.caseAttacked))
+							this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
+					}
 				}
-				else
-				{
-					if (!this.hook.getSoundPlayer().isSoundPlaying() && !maCase.getValue().equals(this.caseAttacked))
-						this.hook.getSoundPlayer().playSound(SoundType.TRY_NEVER);
-				}
-				
 				this.caseAttacked = maCase.getValue();
 			}
+
+
+
 		}
-		
 		if (input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE) )
 		{
 			nextStepKeyPressed = true;
+			if(currentPhase.equals(TutorialPhase.P4)){
+				if (!this.playerListCaseShooted.contains(caseAttacked))
+					this.playerListCaseShooted.add(caseAttacked);
+				playSounds();
+			}
 		}
 
 		switch(this.currentPhase) 
@@ -145,11 +167,18 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.hook.getSoundPlayer().playVoice(SoundType.P24);
 				this.soundLaunched = true;
 			}
+			else
+			{
+				//playSounds();
+				if(boatSinked())
+				{
+					this.hook.getSoundPlayer().playVoice(SoundType.P1);
+				}
+			}
 			break;
 		default :
 			break;
 		}
-		
 		for(Entry<Integer, Case> maCase : cases.entrySet())
 		{
 			if(!(maCase.getKey().equals(Input.KEY_G)&& this.currentPhase.equals(TutorialPhase.P3)))
@@ -157,6 +186,17 @@ public class KeyBoardTutorial extends BattleShipView {
 				maCase.getValue().setColor(Color.white);
 				if(maCase.getValue().equals(this.caseAttacked))
 					maCase.getValue().setColor(Color.orange);
+			}
+			if(this.currentPhase.equals(TutorialPhase.P4))
+			{
+				for(Case c : boat.getCases()){
+					if(boatTouched(c))
+						c.setColor(Color.green);
+					else
+						c.setColor(Color.red);
+
+				}
+
 			}
 
 		}
@@ -173,5 +213,57 @@ public class KeyBoardTutorial extends BattleShipView {
 		super.render(container, base, g);
 		g.drawString("Tutoriel",200,this.height-100);
 	}
+
+	private boolean boatTouched(Case ca) 
+	{
+		if(ca == null)
+			return false;
+
+		for (Case c : boat.getCases())
+			if (c.equals(ca))
+				return true;
+
+		return false;
+	}
+
+	private void playSounds() {
+
+		if (this.boatTouched(caseAttacked))
+			this.hook.getSoundPlayer().playSound(SoundType.EXPLOSION);
+		else
+			this.hook.getSoundPlayer().playSound(SoundType.MISS);
+
+		if (this.boatTouched(caseAttacked))
+			System.out.println("[Sound] Explosion !");
+		else
+			System.out.println("[Sound] Miss !");
+	}
+
+	private boolean boatSinked() 
+	{
+		LinkedList<Case> cases;
+		cases = this.playerListCaseShooted;
+
+		int nbCaseTouched = 0;
+		for (Case c1 : cases)
+		{
+			for (Case c2 : boat.getCases())
+			{
+				if (c1.equals(c2))
+					nbCaseTouched++;
+			}
+		}
+
+		// Bateau coulé
+		if (nbCaseTouched == boat.getCases().length && !boat.isSinked())
+		{
+			boat.setSinked(true);
+			Config.PHRASES_DICTIONARY.get(PhraseType.PH5).play(null, Arrays.asList(boat.getCases()));
+			return true;
+		}
+		return false;
+
+	}
+
 
 }
