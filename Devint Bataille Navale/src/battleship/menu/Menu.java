@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import battleship.config.Config;
 import battleship.game.Game;
 import battleship.menu.BaseMenu;
+import battleship.tutorial.TutorialGame;
 
 @SuppressWarnings("serial")
 public class Menu extends BaseMenu {
@@ -66,7 +67,39 @@ public class Menu extends BaseMenu {
 		// Launch tutoriel
 		if (i == 1)
 		{
+			AppGameContainer container = null;
 			
+			TutorialGame tg = new TutorialGame();
+			
+			try 
+			{
+				container = new AppGameContainer(tg);
+				//g.initStatesList(container);
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+				return;
+			}
+			
+			try 
+			{
+				container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			
+			try 
+			{
+				container.setShowFPS(false);
+				container.start();
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 		
 		// Exit game
