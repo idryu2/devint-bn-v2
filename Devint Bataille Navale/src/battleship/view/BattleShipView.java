@@ -171,7 +171,7 @@ public abstract class BattleShipView extends BasicGameState {
 			if (this.fontLetters != null && this.defaultFont != null)
 			{
 				g.setFont(this.fontLetters);
-				g.drawString(c.getName().toUpperCase(), c.getCenterX() - 20, c.getCenterY() - 20);
+				g.drawString(c.getName().toUpperCase(), c.getCenterX() - 20, c.getCenterY() -40);
 				g.setFont(this.defaultFont);
 			}
 		}
