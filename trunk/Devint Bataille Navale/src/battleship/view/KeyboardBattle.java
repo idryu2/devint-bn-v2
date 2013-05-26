@@ -1,5 +1,6 @@
 package battleship.view;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import battleship.config.Config;
@@ -48,8 +50,10 @@ public class KeyboardBattle extends BattleShipView {
 	public void render(GameContainer container, StateBasedGame base, Graphics g) 
 	{	
 		super.render(container, base, g);
-		
-		g.drawString("C'est à toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée", 200, this.height-100);
+		Font awtFont = new Font(Font.SANS_SERIF, Font.BOLD, 30);
+		TrueTypeFont fontLetters30 = new TrueTypeFont(awtFont, false);   
+		g.setFont(fontLetters30);
+		g.drawString("C'est a toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée", 200, this.height-100);
 	}
 
 	@SuppressWarnings("static-access")
@@ -117,7 +121,11 @@ public class KeyboardBattle extends BattleShipView {
 			boolean endOfTurn = checkTry();
 			
 			if (this.caseAttacked != null)
+			{
 				playSounds();
+				this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
+			}
+				
 			
 			boatSinked();
 			

@@ -1,5 +1,6 @@
 package battleship.view;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -9,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 
 import battleship.config.Config;
@@ -51,6 +53,7 @@ public class KeyBoardTutorial extends BattleShipView {
 	@Override
 	public void init(GameContainer container, StateBasedGame base) 
 	{
+		super.init(container, base);
 		container.getGraphics().setBackground(org.newdawn.slick.Color.blue );
 	}
 
@@ -100,6 +103,10 @@ public class KeyBoardTutorial extends BattleShipView {
 					this.playerListCaseShooted.add(caseAttacked);
 				playSounds();
 			}
+			if (this.caseAttacked != null)
+			{
+				playSounds();
+			}
 		}
 
 		switch(this.currentPhase) 
@@ -121,6 +128,7 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.soundLaunched = false;
 				this.nextStepKeyPressed = false;
 				this.currentPhase = TutorialPhase.P2;
+				this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
 			}
 
 			break;
@@ -140,6 +148,7 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.soundLaunched = false;
 				this.nextStepKeyPressed = false;
 				this.currentPhase = TutorialPhase.P3;
+				this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -166,8 +175,8 @@ public class KeyBoardTutorial extends BattleShipView {
 				this.soundLaunched = false;
 				this.nextStepKeyPressed = false;
 				this.greenCase.setColor(Color.white);
-				//this.caseAttacked = new Case(12, 12, 12, 12, "Départ", null);
 				this.currentPhase = TutorialPhase.P4;
+				this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -193,6 +202,7 @@ public class KeyBoardTutorial extends BattleShipView {
 					this.soundLaunched = false;
 					this.nextStepKeyPressed = false;
 					currentPhase = TutorialPhase.P5;
+					this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -202,6 +212,7 @@ public class KeyBoardTutorial extends BattleShipView {
 				}
 			}
 			break;
+			
 		case P5 :
 			if (!this.soundLaunched)
 			{
@@ -215,9 +226,11 @@ public class KeyBoardTutorial extends BattleShipView {
 					this.soundLaunched = false;
 					this.nextStepKeyPressed = false;
 					currentPhase = TutorialPhase.P6;
+					this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
 				}
 			}
 			break;
+			
 		case P6 :
 			if (!this.soundLaunched)
 			{
@@ -231,6 +244,7 @@ public class KeyBoardTutorial extends BattleShipView {
 					this.soundLaunched = false;
 					this.nextStepKeyPressed = false;
 					currentPhase = TutorialPhase.P7;
+					this.caseAttacked = new Case(10, 10, 10, 10, "Default", casesSounds.get(numbersRowTitles[0])) ;
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -287,6 +301,9 @@ public class KeyBoardTutorial extends BattleShipView {
 	public void render(GameContainer container, StateBasedGame base, Graphics g)
 	{
 		super.render(container, base, g);
+		Font awtFont = new Font(Font.SANS_SERIF, Font.BOLD, 30);
+		TrueTypeFont fontLetters30 = new TrueTypeFont(awtFont, false);   
+		g.setFont(fontLetters30);
 		g.drawString("Tutoriel",200,this.height-100);
 	}
 
