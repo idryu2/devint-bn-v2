@@ -52,8 +52,8 @@ public class KeyboardBattle extends BattleShipView {
 	public void render(GameContainer container, StateBasedGame base, Graphics g) 
 	{	
 		super.render(container, base, g);
-		//g.drawString("C'est à toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée", 200, this.height-100);
-		uFont.drawString(200, this.height-100, "C'est à toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée");
+		g.drawString("C'est à toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée", 200, this.height-100);
+		//uFont.drawString(200, this.height-100, "C'est à toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée");
 	}
 
 	@SuppressWarnings("static-access")

@@ -1,5 +1,7 @@
 package battleship.view;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -17,9 +19,9 @@ import battleship.game.IGame;
 import battleship.services.sounds.SoundType;
 
 public abstract class BattleShipView extends BasicGameState {
-	
+
 	protected int ID;
-	
+
 	// Dimensions de la fenêtre
 	protected int height;
 	protected int width;
@@ -36,7 +38,7 @@ public abstract class BattleShipView extends BasicGameState {
 
 	// Correspondance touche / son
 	protected HashMap<String, SoundType> casesSounds;
-	
+
 	// Fait correspondre un string représentant une lettre avec
 	// un entier représentant une réference de touche de clavier
 	protected LinkedHashMap<String, Integer> matchKeys;
@@ -44,20 +46,47 @@ public abstract class BattleShipView extends BasicGameState {
 	// Hameçon vers la classe principale
 	protected IGame hook;
 
+
+	//Touche F1
+	boolean isF1pressed;
+
 	//Gestion de la police
 	private String fontPath;
 	protected UnicodeFont uFont;
-	
-	
+	/*
+	KeyListener kl = new KeyListener() {
+
+		public void keyPressed(KeyEvent e) {
+
+			if (e.getKeyCode() == KeyEvent.VK_F1) {
+				System.out.println("f1");
+				// A mettre le texte d'aide ici
+			}
+
+
+		}
+
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};*/
+
 	protected BattleShipView(int h, int w , IGame g) 
 	{
 		super();
-		
+
 		this.ID = -1;
 		this.height = h;
 		this.width = w;
 		this.hook = g;
-		
+		this.isF1pressed = false;
+
 		matchKeys = new LinkedHashMap<>();					casesSounds = new HashMap<>();
 		matchKeys.put(numbersRowTitles[0], Input.KEY_1);	casesSounds.put(numbersRowTitles[0], SoundType.N1);
 		matchKeys.put(numbersRowTitles[1], Input.KEY_2);	casesSounds.put(numbersRowTitles[1], SoundType.N2);
@@ -69,7 +98,7 @@ public abstract class BattleShipView extends BasicGameState {
 		matchKeys.put(numbersRowTitles[7], Input.KEY_8);	casesSounds.put(numbersRowTitles[7], SoundType.N8);
 		matchKeys.put(numbersRowTitles[8], Input.KEY_9);	casesSounds.put(numbersRowTitles[8], SoundType.N9);
 		matchKeys.put(numbersRowTitles[9], Input.KEY_0);	casesSounds.put(numbersRowTitles[9], SoundType.N0);
-		
+
 		matchKeys.put(firstRowTitles[0], Input.KEY_A);		casesSounds.put(firstRowTitles[0], SoundType.A);
 		matchKeys.put(firstRowTitles[1], Input.KEY_Z);		casesSounds.put(firstRowTitles[1], SoundType.Z);
 		matchKeys.put(firstRowTitles[2], Input.KEY_E);		casesSounds.put(firstRowTitles[2], SoundType.E);
@@ -81,7 +110,7 @@ public abstract class BattleShipView extends BasicGameState {
 		matchKeys.put(firstRowTitles[8], Input.KEY_O);		casesSounds.put(firstRowTitles[8], SoundType.O);
 		matchKeys.put(firstRowTitles[9], Input.KEY_P);		casesSounds.put(firstRowTitles[9], SoundType.P);
 
-		
+
 		matchKeys.put(secondRowTitles[0], Input.KEY_Q);		casesSounds.put(secondRowTitles[0], SoundType.Q);
 		matchKeys.put(secondRowTitles[1], Input.KEY_S);		casesSounds.put(secondRowTitles[1], SoundType.S);
 		matchKeys.put(secondRowTitles[2], Input.KEY_D);		casesSounds.put(secondRowTitles[2], SoundType.D);
@@ -99,8 +128,9 @@ public abstract class BattleShipView extends BasicGameState {
 		matchKeys.put(thirdRowTitles[3], Input.KEY_V);		casesSounds.put(thirdRowTitles[3], SoundType.V);
 		matchKeys.put(thirdRowTitles[4], Input.KEY_B);		casesSounds.put(thirdRowTitles[4], SoundType.B);
 		matchKeys.put(thirdRowTitles[5], Input.KEY_N);		casesSounds.put(thirdRowTitles[5], SoundType.N);
-		
+
 		this.cases = CreateKeyBoard(this.width/12);
+		/*
 		try {
 	    	fontPath =  "resources/fonts/GROBOLD.ttf"; 
 		    uFont = new UnicodeFont(fontPath , 40, false, false);  
@@ -110,23 +140,23 @@ public abstract class BattleShipView extends BasicGameState {
 			//uFont.loadGlyphs();
 		} catch (SlickException e) {
 			System.out.println("Erreur de dingue !");
-		}  
-		
-//		Font font = "resources/fonts/GROBOLD.ttf"; 
-//		float size = 20.0F;
-//		
-//		UnicodeFont f = new UnicodeFont(font.deriveFont(0 /*normal*/, size));
-//		f.addAsciiGlyphs();
-//		ColorEffect e = new ColorEffect();
-//		e.setColor(java.awt.Color.black);
-//		f.getEffects().add(e);
-//		try {
-//		    f.loadGlyphs();
-//		} catch (SlickException e1) {
-//		    e1.printStackTrace();
-//		}
+		}  */
+
+		//		Font font = "resources/fonts/GROBOLD.ttf"; 
+		//		float size = 20.0F;
+		//		
+		//		UnicodeFont f = new UnicodeFont(font.deriveFont(0 /*normal*/, size));
+		//		f.addAsciiGlyphs();
+		//		ColorEffect e = new ColorEffect();
+		//		e.setColor(java.awt.Color.black);
+		//		f.getEffects().add(e);
+		//		try {
+		//		    f.loadGlyphs();
+		//		} catch (SlickException e1) {
+		//		    e1.printStackTrace();
+		//		}
 	}
-	
+
 	public HashMap<Integer, Case> getCases() 
 	{
 		return cases;
@@ -156,7 +186,7 @@ public abstract class BattleShipView extends BasicGameState {
 			listCases.put(matchKeys.get(numbersRowTitles[i]), new Case(numbersRow+i*(taille+1),taille,taille,taille,numbersRowTitles[i], casesSounds.get(numbersRowTitles[i])));
 			listCases.put(matchKeys.get(firstRowTitles[i]), new Case(firstRow+i*(taille+1),2*taille+1,taille,taille, firstRowTitles[i], casesSounds.get(firstRowTitles[i])));
 			listCases.put(matchKeys.get(secondRowTitles[i]), new Case(secondRow+i*(taille+1),3*taille+2,taille,taille,secondRowTitles[i], casesSounds.get(secondRowTitles[i])));
-			
+
 		}
 
 		for (int i=0; i<6;i++)
@@ -166,11 +196,11 @@ public abstract class BattleShipView extends BasicGameState {
 	}
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1){
-	     
-	    
-		
+
+
+
 	}
-	
+
 	@Override
 	public void render(GameContainer container, StateBasedGame base, Graphics g){
 		g.setColor(org.newdawn.slick.Color.white);
@@ -182,21 +212,33 @@ public abstract class BattleShipView extends BasicGameState {
 			g.fill(c);
 			g.setColor(org.newdawn.slick.Color.black);
 			//g.setLineWidth(5);
-			//g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
-			uFont.drawString(c.getCenterX(), c.getCenterY(), c.getName());
+			g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
+			//uFont.drawString(c.getCenterX(), c.getCenterY(), c.getName());
 		}
 
 	}
 
-	
+
 
 	@Override
 	public void update(GameContainer container, StateBasedGame base, int arg2)
 	{
+
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			System.exit(0);
+		if (container.getInput().isKeyDown(Input.KEY_F1) && !isF1pressed)
+		{
+			//System.out.println("That's F1");
+			this.hook.getSoundPlayer().playSound(SoundType.N9);
+			isF1pressed = true;
+		}
+		if (isF1pressed)
+		{
+			//System.out.println("That's not F1");
+			isF1pressed = false;
+		}
 	}
-	
+
 	@Override
 	public int getID() 
 	{
