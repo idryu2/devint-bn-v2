@@ -346,7 +346,7 @@ public class KeyBoardTutorial extends BattleShipView {
 					nbCaseTouched++;
 			}
 		}
-		System.out.println("Nb case touched =" +nbCaseTouched);
+
 		// Bateau coulé
 		if (nbCaseTouched == boat.getCases().length && !boat.isSinked())
 		{
