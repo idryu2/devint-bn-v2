@@ -186,7 +186,7 @@ public abstract class BattleShipView extends BasicGameState {
 		
 		if (container.getInput().isKeyDown(Input.KEY_F1) && !isF1pressed)
 		{
-		   this.hook.getSoundPlayer().playSound(SoundType.N9);
+		   this.hook.getSoundPlayer().playSound(SoundType.P32);
 		   isF1pressed = true;
 		}
 		if (isF1pressed)
