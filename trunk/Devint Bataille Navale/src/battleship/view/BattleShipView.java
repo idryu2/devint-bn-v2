@@ -7,6 +7,9 @@ import java.util.Map.Entry;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -41,6 +44,11 @@ public abstract class BattleShipView extends BasicGameState {
 	// Hameçon vers la classe principale
 	protected IGame hook;
 
+	//Gestion de la police
+	private String fontPath;
+	protected UnicodeFont uFont;
+	
+	
 	protected BattleShipView(int h, int w , IGame g) 
 	{
 		super();
@@ -93,7 +101,30 @@ public abstract class BattleShipView extends BasicGameState {
 		matchKeys.put(thirdRowTitles[5], Input.KEY_N);		casesSounds.put(thirdRowTitles[5], SoundType.N);
 		
 		this.cases = CreateKeyBoard(this.width/12);
+		try {
+	    	fontPath =  "resources/fonts/GROBOLD.ttf"; 
+		    uFont = new UnicodeFont(fontPath , 40, false, false);  
+		    //uFont.addAsciiGlyphs();  
+		    //uFont.addGlyphs(400, 600);  
+		    uFont.getEffects().add(new ColorEffect(java.awt.Color.BLACK));  
+			//uFont.loadGlyphs();
+		} catch (SlickException e) {
+			System.out.println("Erreur de dingue !");
+		}  
 		
+//		Font font = "resources/fonts/GROBOLD.ttf"; 
+//		float size = 20.0F;
+//		
+//		UnicodeFont f = new UnicodeFont(font.deriveFont(0 /*normal*/, size));
+//		f.addAsciiGlyphs();
+//		ColorEffect e = new ColorEffect();
+//		e.setColor(java.awt.Color.black);
+//		f.getEffects().add(e);
+//		try {
+//		    f.loadGlyphs();
+//		} catch (SlickException e1) {
+//		    e1.printStackTrace();
+//		}
 	}
 	
 	public HashMap<Integer, Case> getCases() 
@@ -133,6 +164,12 @@ public abstract class BattleShipView extends BasicGameState {
 
 		return listCases;
 	}
+	@Override
+	public void init(GameContainer arg0, StateBasedGame arg1){
+	     
+	    
+		
+	}
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame base, Graphics g){
@@ -144,13 +181,14 @@ public abstract class BattleShipView extends BasicGameState {
 			g.setColor(c.getColor());
 			g.fill(c);
 			g.setColor(org.newdawn.slick.Color.black);
-			g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
+			//g.setLineWidth(5);
+			//g.drawString(c.getName(), c.getCenterX(), c.getCenterY());
+			uFont.drawString(c.getCenterX(), c.getCenterY(), c.getName());
 		}
 
 	}
 
-	@Override
-	public abstract void init(GameContainer arg0, StateBasedGame arg1);
+	
 
 	@Override
 	public void update(GameContainer container, StateBasedGame base, int arg2)
