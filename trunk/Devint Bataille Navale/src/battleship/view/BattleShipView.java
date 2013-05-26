@@ -49,6 +49,8 @@ public abstract class BattleShipView extends BasicGameState {
 	//Gestion de la police
 	protected org.newdawn.slick.Font fontLetters;
 	protected org.newdawn.slick.Font defaultFont;
+
+	private boolean isF1pressed;
 	
 	protected BattleShipView(int h, int w , IGame g) 
 	{
@@ -102,7 +104,8 @@ public abstract class BattleShipView extends BasicGameState {
 		matchKeys.put(thirdRowTitles[5], Input.KEY_N);		casesSounds.put(thirdRowTitles[5], SoundType.N);
 		
 		this.cases = CreateKeyBoard(this.width/12);
-
+		
+		this.isF1pressed = false;
 	}
 	
 	public HashMap<Integer, Case> getCases() 
@@ -175,12 +178,21 @@ public abstract class BattleShipView extends BasicGameState {
 	}
 
 	
-
 	@Override
 	public void update(GameContainer container, StateBasedGame base, int arg2)
 	{
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			System.exit(0);
+		
+		if (container.getInput().isKeyDown(Input.KEY_F1) && !isF1pressed)
+		{
+		   this.hook.getSoundPlayer().playSound(SoundType.N9);
+		   isF1pressed = true;
+		}
+		if (isF1pressed)
+		{
+		   isF1pressed = false;
+		}
 	}
 	
 	@Override

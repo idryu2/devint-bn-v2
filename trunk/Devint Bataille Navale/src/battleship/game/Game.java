@@ -107,7 +107,7 @@ public class Game extends StateBasedGame implements IGame,KeyListener {
 		//
 		Boat b1 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_B),
 				this.kbbView.getCases().get(Input.KEY_N),
-				this.kbbView.getCases().get(Input.KEY_H));
+				this.kbbView.getCases().get(Input.KEY_V));
 
 		Boat b2 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_K),
 				this.kbbView.getCases().get(Input.KEY_L),
