@@ -109,6 +109,7 @@ public class Config {
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.P29, "resources/sounds/voice/phrases/29.wav");
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.P30, "resources/sounds/voice/phrases/30.wav");
 		SOUNDS_PATHS_DICTIONARY.put(SoundType.P31, "resources/sounds/voice/phrases/31.wav");
+		SOUNDS_PATHS_DICTIONARY.put(SoundType.P32, "resources/sounds/voice/phrases/32.wav");
 	}
 	
 	public static HashMap<PhraseType, Phrase> PHRASES_DICTIONARY = new HashMap<>();

@@ -93,5 +93,6 @@ public enum SoundType {
 	P28,
 	P29,
 	P30,
-	P31
+	P31, 
+	P32
 }
