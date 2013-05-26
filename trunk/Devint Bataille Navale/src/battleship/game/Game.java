@@ -1,5 +1,7 @@
 package battleship.game;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
 import org.newdawn.slick.*;
@@ -20,7 +22,7 @@ import battleship.view.KeyboardBattle;
  * @author Baptiste Viale
  *
  */
-public class Game extends StateBasedGame implements IGame {
+public class Game extends StateBasedGame implements IGame,KeyListener {
 
 	private Level difficulty;
 	private AIPlayer aiplayer;
@@ -29,6 +31,29 @@ public class Game extends StateBasedGame implements IGame {
 	private KeyboardBattle kbbView;
 
 	protected boolean isSoundEnabled;
+	
+	KeyListener kl = new KeyListener() {
+
+		public void keyPressed(KeyEvent e) {
+        	
+			if (e.getKeyCode() == KeyEvent.VK_F1) {
+				System.out.println("f1");
+				// A mettre le texte d'aide ici
+			}
+			
+
+		}
+
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 	public Game()
 	{
@@ -142,6 +167,24 @@ public class Game extends StateBasedGame implements IGame {
 		}
 		
 		this.soundPlayer.playVoice(SoundType.P18);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
