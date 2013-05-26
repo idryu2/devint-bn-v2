@@ -32,28 +32,7 @@ public class Game extends StateBasedGame implements IGame,KeyListener {
 
 	protected boolean isSoundEnabled;
 	
-	KeyListener kl = new KeyListener() {
-
-		public void keyPressed(KeyEvent e) {
-        	
-			if (e.getKeyCode() == KeyEvent.VK_F1) {
-				System.out.println("f1");
-				// A mettre le texte d'aide ici
-			}
-			
-
-		}
-
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-
-		}
-	};
+	
 
 	public Game()
 	{
