@@ -10,7 +10,11 @@ import battleship.tutorial.TutorialGame;
 
 @SuppressWarnings("serial")
 public class Menu extends BaseMenu {
-
+	
+	private AppGameContainer container;
+	private Game game;
+	private TutorialGame tutoGame;
+	
 	/**
 	 * Constructeur sans voix, à utiliser uniquement dans des versions de
 	 * développement, en attendant la mise en place de la synthèse vocale.
@@ -29,14 +33,14 @@ public class Menu extends BaseMenu {
 		// Launch game
 		if(i ==0) 
 		{
-			AppGameContainer container = null;
+			this.container = null;
 			
-			Game g = new Game();
+			this.game = new Game();
 			
 			try 
 			{
-				container = new AppGameContainer(g);
-				//g.initStatesList(container);
+				this.container = new AppGameContainer(this.game);
+				this.container.setVerbose(false);
 			} 
 			catch (SlickException e) 
 			{
@@ -46,7 +50,7 @@ public class Menu extends BaseMenu {
 			
 			try 
 			{
-				container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
+				this.container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,true);
 			} 
 			catch (Exception e) 
 			{
@@ -55,8 +59,9 @@ public class Menu extends BaseMenu {
 			
 			try 
 			{
-				container.setShowFPS(false);
-				container.start();
+				this.container.setShowFPS(false);
+				this.container.setForceExit(false);
+				this.container.start();
 			} 
 			catch (SlickException e) 
 			{
@@ -66,15 +71,13 @@ public class Menu extends BaseMenu {
 		
 		// Launch tutoriel
 		if (i == 1)
-		{
-			AppGameContainer container = null;
-			
-			TutorialGame tg = new TutorialGame();
+		{			
+			this.tutoGame = new TutorialGame();
 			
 			try 
 			{
-				container = new AppGameContainer(tg);
-				//g.initStatesList(container);
+				this.container = new AppGameContainer(this.tutoGame);
+				this.container.setVerbose(false);
 			} 
 			catch (SlickException e) 
 			{
@@ -84,7 +87,7 @@ public class Menu extends BaseMenu {
 			
 			try 
 			{
-				container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,false);
+				this.container.setDisplayMode(Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT,true);
 			} 
 			catch (Exception e) 
 			{
@@ -93,8 +96,9 @@ public class Menu extends BaseMenu {
 			
 			try 
 			{
-				container.setShowFPS(false);
-				container.start();
+				this.container.setShowFPS(false);
+				this.container.setForceExit(false);
+				this.container.start();
 			} 
 			catch (SlickException e) 
 			{

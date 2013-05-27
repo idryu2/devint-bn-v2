@@ -300,10 +300,9 @@ public class KeyBoardTutorial extends BattleShipView {
 	@Override
 	public void render(GameContainer container, StateBasedGame base, Graphics g)
 	{
-		super.render(container, base, g);
-		Font awtFont = new Font(Font.SANS_SERIF, Font.BOLD, 30);
-		TrueTypeFont fontLetters30 = new TrueTypeFont(awtFont, false);   
-		g.setFont(fontLetters30);
+		super.render(container, base, g);   
+		
+		g.setFont(this.labelFont);
 		g.drawString("Tutoriel",200,this.height-100);
 	}
 

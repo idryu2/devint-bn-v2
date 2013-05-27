@@ -22,7 +22,7 @@ import battleship.view.KeyboardBattle;
  * @author Baptiste Viale
  *
  */
-public class Game extends StateBasedGame implements IGame,KeyListener {
+public class Game extends StateBasedGame implements IGame {
 
 	private Level difficulty;
 	private AIPlayer aiplayer;
@@ -121,8 +121,6 @@ public class Game extends StateBasedGame implements IGame,KeyListener {
 		this.aiplayer.getContext().getBoats().add(b2);
 		this.aiplayer.getContext().getBoats().add(b3);
 		
-		this.soundPlayer.playVoice(SoundType.P5);
-		
 		// change view
 		//
 		//this.enterState(this.kbbView.getID());
@@ -148,22 +146,5 @@ public class Game extends StateBasedGame implements IGame,KeyListener {
 		this.soundPlayer.playVoice(SoundType.P18);
 	}
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
