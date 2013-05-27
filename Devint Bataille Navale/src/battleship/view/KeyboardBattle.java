@@ -43,6 +43,8 @@ public class KeyboardBattle extends BattleShipView {
 	{
 		super.init(container, base);
 		container.getGraphics().setBackground(Color.blue);
+		
+		this.hook.getSoundPlayer().playVoice(SoundType.P5);
 	}
 
 
@@ -50,9 +52,8 @@ public class KeyboardBattle extends BattleShipView {
 	public void render(GameContainer container, StateBasedGame base, Graphics g) 
 	{	
 		super.render(container, base, g);
-		Font awtFont = new Font(Font.SANS_SERIF, Font.BOLD, 30);
-		TrueTypeFont fontLetters30 = new TrueTypeFont(awtFont, false);   
-		g.setFont(fontLetters30);
+ 
+		g.setFont(this.labelFont);
 		g.drawString("C'est a toi de jouer, choisis la case que tu souhaites attaquer et appuie sur entrée", 200, this.height-100);
 	}
 

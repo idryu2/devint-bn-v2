@@ -49,7 +49,8 @@ public abstract class BattleShipView extends BasicGameState {
 	//Gestion de la police
 	protected org.newdawn.slick.Font fontLetters;
 	protected org.newdawn.slick.Font defaultFont;
-
+	protected org.newdawn.slick.Font labelFont;
+	
 	private boolean isF1pressed;
 	
 	protected BattleShipView(int h, int w , IGame g) 
@@ -150,6 +151,9 @@ public abstract class BattleShipView extends BasicGameState {
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 	{
+		arg0.setVerbose(false);
+		Font awtFont1 = new Font(Font.SANS_SERIF, Font.BOLD, 30);
+		this.labelFont = new TrueTypeFont(awtFont1, false);  
 		this.defaultFont = arg0.getDefaultFont();
 		Font awtFont = new Font(Font.SANS_SERIF, Font.BOLD, 60);
 		this.fontLetters = new TrueTypeFont(awtFont, false);   
@@ -182,7 +186,11 @@ public abstract class BattleShipView extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame base, int arg2)
 	{
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
-			System.exit(0);
+		{
+			this.hook.getSoundPlayer().stop();
+			container.exit();
+		}
+			
 		
 		if (container.getInput().isKeyDown(Input.KEY_F1) && !isF1pressed)
 		{

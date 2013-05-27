@@ -61,6 +61,15 @@ public class SoundPlayer {
 		return this.hook.isSoundEnabled();
 	}
 	
+	public void stop()
+	{
+		try
+		{
+			this.manager.interrupt();
+		}
+		catch(Exception e){ }
+	}
+	
 	private class QueueManagerThread extends Thread
 	{
 		private LinkedList<SoundType> soundsToPlay;
@@ -83,24 +92,21 @@ public class SoundPlayer {
 					{
 						Thread.sleep(100);
 					} 
-					catch (InterruptedException e) 
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					catch (InterruptedException e) { }
 				}
 				
-				while (this.hook.isSoundPlaying() || !this.hook.isSoundAllowed())
-				{					
-					try 
-					{
-						Thread.sleep(100);
-					} 
-					catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				try
+				{
+					while (this.hook.isSoundPlaying() || !this.hook.isSoundAllowed())
+					{					
+						try 
+						{
+							Thread.sleep(100);
+						} 
+						catch (InterruptedException e) { }
 					}
 				}
+				catch(Throwable t) { }
 				
 				System.out.println("[Manager] Lancement de " + this.soundsToPlay.getFirst().name());
 				SoundLaunchThread t = new SoundLaunchThread(this.hook, this.soundsToPlay.removeFirst());
@@ -110,10 +116,7 @@ public class SoundPlayer {
 				{
 					Thread.sleep(300);
 				} 
-				catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				catch (InterruptedException e) { }
 			}
 		}
 		
