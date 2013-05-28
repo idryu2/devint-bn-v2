@@ -113,9 +113,9 @@ public class Game extends StateBasedGame implements IGame {
 				this.kbbView.getCases().get(Input.KEY_L),
 				this.kbbView.getCases().get(Input.KEY_M));
 
-		Boat b3 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_I),
-				this.kbbView.getCases().get(Input.KEY_O),
-				this.kbbView.getCases().get(Input.KEY_P));
+		Boat b3 = new ThreeSlotsBoat().place(this.kbbView.getCases().get(Input.KEY_2),
+				this.kbbView.getCases().get(Input.KEY_3),
+				this.kbbView.getCases().get(Input.KEY_4));
 
 		this.aiplayer.getContext().getBoats().add(b1);
 		this.aiplayer.getContext().getBoats().add(b2);
