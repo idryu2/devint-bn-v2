@@ -188,7 +188,7 @@ public abstract class BattleShipView extends BasicGameState {
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE))
 		{
 			this.hook.getSoundPlayer().stop();
-			container.exit();
+			System.exit(0);
 		}
 			
 		
